@@ -1007,7 +1007,7 @@ public class BlockDataController extends ADataController {
                             Slimefun.logger()
                                     .log(
                                             Level.SEVERE,
-                                            "加载目标物品失败, 请检查实际数据 ["
+                                            "Failed to load the target item, please check the stored data ["
                                                     + LocationUtils.locationToString(blockData.getLocation()) + ":"
                                                     + slot + "]",
                                             ex);
@@ -1127,7 +1127,11 @@ public class BlockDataController extends ADataController {
                         } catch (Exception ex) {
                             inv[slot] = null;
                             Slimefun.logger()
-                                    .log(Level.SEVERE, "加载目标物品失败, 请检查实际数据 [" + uniData.getKey() + ":" + slot + "]", ex);
+                                    .log(
+                                            Level.SEVERE,
+                                            "Failed to load the target item, please check the stored data ["
+                                                    + uniData.getKey() + ":" + slot + "]",
+                                            ex);
                         }
                     }
 
@@ -1628,7 +1632,8 @@ public class BlockDataController extends ADataController {
                         Slimefun.logger()
                                 .log(
                                         Level.SEVERE,
-                                        "加载目标物品失败, 请检查实际数据 [" + universalData.getKey() + ":" + slot + "]",
+                                        "Failed to load the target item, please check the stored data ["
+                                                + universalData.getKey() + ":" + slot + "]",
                                         ex);
                     }
                 }

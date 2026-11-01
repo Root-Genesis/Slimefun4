@@ -41,10 +41,10 @@ public class RecordSet {
     }
 
     /**
-     * 获取兼容旧 API 的字符串数据视图，二进制值会转换为 Base64。
+     * Returns a string view of the data compatible with the legacy API. Binary values are converted to Base64.
      *
-     * @return 只读字符串数据视图
-     * @deprecated 请使用 {@link #getAllValues()} 获取包含原始二进制值的数据
+     * @return A read-only string view of the data
+     * @deprecated Use {@link #getAllValues()} to get the data including raw binary values
      */
     @Deprecated
     @ParametersAreNonnullByDefault

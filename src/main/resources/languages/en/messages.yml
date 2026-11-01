@@ -41,6 +41,7 @@ commands:
     player-never-joined: '&4No player with that name could be found!'
     backpack-does-not-exist: '&4The specified backpack does not exist!'
     restored-backpack-given: '&aYour backpack has been restored and was added to your inventory!'
+    searching: '&eSearching...'
 
   charge:
     description: Charges the item you are holding
@@ -76,6 +77,9 @@ commands:
 
   blockdata:
     description: 'Manipulate Slimefun block data'
+
+  tick:
+    description: 'Manage Slimefun ticker breakpoints (tick freeze)'
 
 placeholderapi:
   profile-loading: 'Loading...'
@@ -198,6 +202,7 @@ messages:
   unlocked: '&bYou have unlocked &7"%research%"'
   only-players: '&4This command is only for Players'
   unknown-player: '&4Unknown Player: &c%player%'
+  invalid-item-in-hand: '&eThe item in your hand is not a Slimefun item!'
   no-permission: '&4You do not have the required permission to do this'
   usage: '&4Usage: &c%usage%'
   not-online: '&4%player% &cis not online!'
@@ -231,6 +236,9 @@ messages:
     select: 'Select this recipe'
     temporarily-disabled: '&eThis Auto-Crafter was temporarily disabled. You can re-enable it at any time!'
     re-enabled: '&eThis Auto-Crafter was re-enabled!'
+    recipe-unavailable: |
+      &cThis item cannot be used. You may not have unlocked it yet, or it has been disabled by the server.
+      &7If you have not unlocked this item yet, please unlock it before crafting.
 
     tooltips:
       enabled:
@@ -316,6 +324,16 @@ messages:
   pickaxe-of-the-seeker:
     no-ores: '&cCannot find any nearby ores!'
 
+  tick-rate: '&eTick rate: &b%tick-rate%'
+  tick-query: '&eTick Freeze: %mode%&e, Tick rate: &b%tick-rate%'
+  tick-mode: '&eTick Freeze: %mode%'
+  not-found: '&cInvalid argument'
+  not-a-number: '&cPlease enter a number'
+  tick-freeze-predicate-reset: '&eThe custom Tick Freeze filter has been reset'
+  tick-freeze-on: '&aON'
+  tick-freeze-off: '&cOFF'
+  wrong-world: '&cYou are not in the same world! Unable to highlight the block!'
+
 machines:
   pattern-not-found: '&eSorry, I could not recognize this Recipe. Please place the Items in the correct pattern into the Dispenser.'
   unknown-material: '&eSorry, I could not recognize the Item in my dispenser. Please put something in that I know.'
@@ -332,6 +350,7 @@ machines:
 
   ANCIENT_PEDESTAL:
     obstructed: '&4Pedestal is obstructed! &cRemove anything above the pedestal!'
+    in-use: '&4There are still items on the pedestals!'
 
   HOLOGRAM_PROJECTOR:
     enter-text: '&7Please enter your desired Hologram Text into your Chat. &r(Color Codes are supported!)'
@@ -377,6 +396,9 @@ machines:
     no-permission: '&4You do not seem to have permission to operate an Industrial Miner here!'
     finished: '&eYour Industrial Miner has finished! It obtained a total of %ores% ore(s)!'
 
+  TABLE_SAW:
+    no-slimefun-item: '&cYou cannot use Slimefun items on the Table Saw!'
+
 anvil:
   not-working: '&4You cannot use Slimefun items in an anvil!'
   mcmmo-salvaging: '&4You cannot salvage Slimefun items!'
@@ -397,6 +419,7 @@ backpack:
   already-open: '&cSorry, this Backpack is open somewhere else!'
   no-stack: '&cYou cannot stack Backpacks'
   set-name: '&ePlease enter a name for your backpack in the chat. &7(Color codes are supported!)'
+  not-backpack-owner: '&cThe owner of this backpack is offline, you are not allowed to use it!'
   not-original-item: '&cYou must be holding the original backpack item!'
 
 workbench:

@@ -102,8 +102,8 @@ public class TickerTask implements Runnable {
             Executors.newSingleThreadExecutor(runnable -> new Thread(runnable, "Slimefun - Ticker Operation Thread"));
 
     /**
-     * 防抖
-     * 表示是否有一段步进任务已在 {@link #operateExecutor} 上跑。见 {@link #stepTo}。
+     * Debounce guard.
+     * Indicates whether a stepping task is already running on {@link #operateExecutor}. See {@link #stepTo}.
      */
     private final AtomicBoolean stepping = new AtomicBoolean(false);
 
@@ -112,7 +112,7 @@ public class TickerTask implements Runnable {
     @Setter
     private volatile boolean tickFreeze = false;
 
-    // false -> 不暂停， true -> 暂停
+    // false -> not paused, true -> paused
     private volatile Predicate<WaitingEntry> tickFreezePredicate = entry -> false;
 
     public void setTickFreezePredicate(Predicate<WaitingEntry> predicate) {
@@ -159,7 +159,7 @@ public class TickerTask implements Runnable {
 
     @Override
     public void run() {
-        if (paused || stepping.get()) { // 步过期间不执行
+        if (paused || stepping.get()) { // Do not run while stepping
             return;
         }
 
@@ -181,7 +181,7 @@ public class TickerTask implements Runnable {
         running = true;
 
         try {
-            flushWaitingEntries(); // 上轮 tick freeze 没执行的
+            flushWaitingEntries(); // Entries left over from the previous tick freeze
             Slimefun.getProfiler().start();
             Set<BlockTicker> tickers = new HashSet<>();
 
@@ -194,12 +194,12 @@ public class TickerTask implements Runnable {
                 }
 
                 for (Map.Entry<ChunkPosition, Set<TickLocation>> entry : loc) {
-                    // 将所有机器添加到 waiting queue 中，在这里会检查 tickFreeze
+                    // Add all machines to the waiting queue, tickFreeze is checked here
                     tickChunk(entry.getKey(), tickers, new HashSet<>(entry.getValue()));
                 }
             }
 
-            // 遍历阶段结束，本轮机器才真正开始执行
+            // Iteration phase finished, machines of this round actually start running now
             if (!tickFreeze) {
                 flushWaitingEntries();
             }
@@ -226,7 +226,10 @@ public class TickerTask implements Runnable {
 
             int discarded = clearWaitingEntries();
             if (discarded > 0) {
-                Slimefun.logger().log(Level.SEVERE, "有 " + discarded + " 个机器未能成功 Tick，已从待执行队列丢弃");
+                Slimefun.logger()
+                        .log(
+                                Level.SEVERE,
+                                discarded + " machine(s) failed to tick and were discarded from the waiting queue");
             }
         }
     }
@@ -272,8 +275,8 @@ public class TickerTask implements Runnable {
     }
 
     /**
-     * 放入 waiting
-     * 真正的执行在 {@link #flushWaitingEntries()}。
+     * Puts the entry into the waiting queue.
+     * The actual execution happens in {@link #flushWaitingEntries()}.
      */
     @ParametersAreNonnullByDefault
     private void enqueueTick(Location l, SlimefunItem item, ASlimefunDataContainer data, Set<BlockTicker> tickers) {
@@ -305,7 +308,7 @@ public class TickerTask implements Runnable {
     }
 
     /**
-     * 执行堆积 waiting 的全部 tick 任务
+     * Runs all tick tasks accumulated in the waiting queue
      */
     private void flushWaitingEntries() {
         while (!waiting.isEmpty() && !tickFreeze) {
@@ -314,11 +317,11 @@ public class TickerTask implements Runnable {
     }
 
     /**
-     * {@link ClickEvent#callback} 会运行在主线程上，步过/运行到 操作可能导致阻塞主线程
-     * 使用 {@code operateExecutor} 避免阻塞主线程
+     * {@link ClickEvent#callback} runs on the main thread, so step over / run to operations could block it.
+     * {@code operateExecutor} is used to avoid blocking the main thread.
      */
     private void stepTo(WaitingEntry target, boolean inclusive) {
-        // 防抖：禁止两段步进同时跑
+        // Debounce: prevent two stepping tasks from running at the same time
         if (!stepping.compareAndSet(false, true)) {
             return;
         }
@@ -329,7 +332,8 @@ public class TickerTask implements Runnable {
                     while (true) {
                         WaitingEntry head = waiting.peek();
 
-                        // 队列已空，或者队首已经越过目标（被别的线程推进过），就收手
+                        // Stop if the queue is empty or its head has already passed the target (advanced by another
+                        // thread)
                         if (head == null || (inclusive ? head.id > target.id : head.id >= target.id)) {
                             break;
                         }
@@ -343,7 +347,7 @@ public class TickerTask implements Runnable {
             });
         } catch (RejectedExecutionException x) {
             stepping.set(false);
-            Slimefun.logger().log(Level.SEVERE, x, () -> "Operate Executor 不可用，无法步进");
+            Slimefun.logger().log(Level.SEVERE, x, () -> "Operate Executor is unavailable, unable to step");
         }
     }
 
@@ -354,7 +358,7 @@ public class TickerTask implements Runnable {
     }
 
     /**
-     * 无论是否 tickFreeze，都会调用到此方法
+     * This method is called regardless of whether tickFreeze is enabled
      */
     private void timedTickBlock(WaitingEntry entry) {
         boolean profiling = Slimefun.getProfiler().isProfiling();
@@ -363,7 +367,7 @@ public class TickerTask implements Runnable {
 
     @ParametersAreNonnullByDefault
     private void timedTickBlock(WaitingEntry entry, long timeout, TimeUnit timeUnit, boolean profiling) {
-        if (entry.data.isPendingRemove()) return; // waiting 期间机器可能会被拆除
+        if (entry.data.isPendingRemove()) return; // The machine may have been removed while waiting
 
         Location l = entry.location;
         SlimefunItem item = entry.item;
@@ -373,7 +377,7 @@ public class TickerTask implements Runnable {
             Slimefun.runSync(() -> {
                 long timestamp = profiling ? System.nanoTime() : 0;
                 try {
-                    // Bukkit 自带的 Watchdog 会检测超时，不需要我们处理
+                    // Bukkit's own Watchdog detects timeouts, no need for us to handle it
                     tickBlock(entry);
                 } catch (Exception | LinkageError x) {
                     reportErrors(l, item, x);
@@ -423,14 +427,14 @@ public class TickerTask implements Runnable {
 
     @ParametersAreNonnullByDefault
     private void timedTickBlock(WaitingEntry entry, long timeout, TimeUnit timeUnit) {
-        if (entry.data.isPendingRemove()) return; // waiting 期间机器可能会被拆除
+        if (entry.data.isPendingRemove()) return; // The machine may have been removed while waiting
 
         Location l = entry.location;
         SlimefunItem item = entry.item;
 
         try {
             if (entry.isSync()) {
-                // Bukkit 自带的 Watchdog 会检测超时，不需要我们处理
+                // Bukkit's own Watchdog detects timeouts, no need for us to handle it
                 tickBlock(entry);
             } else {
                 CompletableFuture.runAsync(
@@ -449,13 +453,13 @@ public class TickerTask implements Runnable {
 
     public static String getChineseTimeUnit(TimeUnit unit) {
         return switch (unit) {
-            case NANOSECONDS -> "纳秒";
-            case MICROSECONDS -> "微秒";
-            case MILLISECONDS -> "毫秒";
-            case SECONDS -> "秒";
-            case MINUTES -> "分钟";
-            case HOURS -> "小时";
-            case DAYS -> "天";
+            case NANOSECONDS -> "nanoseconds";
+            case MICROSECONDS -> "microseconds";
+            case MILLISECONDS -> "milliseconds";
+            case SECONDS -> "seconds";
+            case MINUTES -> "minutes";
+            case HOURS -> "hours";
+            case DAYS -> "days";
         };
     }
 
@@ -466,7 +470,8 @@ public class TickerTask implements Runnable {
         Slimefun.logger()
                 .log(
                         Level.SEVERE,
-                        "该方块对应的机器在上一个 Tick 中运行超过 " + timeout + getChineseTimeUnit(timeUnit) + "，可能会导致粘液刻严重被拖慢！");
+                        "The machine at this block took more than " + timeout + " " + getChineseTimeUnit(timeUnit)
+                                + " in the last tick, which may severely slow down the Slimefun ticker!");
         reportErrors(l, item, e);
     }
 
@@ -654,7 +659,7 @@ public class TickerTask implements Runnable {
         Validate.notNull(uuid, "Universal Data ID cannot be null!");
 
         synchronized (tickingLocations) {
-            // 顺手清掉被搬空的 Set
+            // Also clean up any Sets that are now empty
             var iterator = tickingLocations.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<ChunkPosition, Set<TickLocation>> entry = iterator.next();
@@ -674,7 +679,7 @@ public class TickerTask implements Runnable {
     public void showWaitingList(int page) {
         var builder = Component.text()
                 .color(TextColor.color(0xFFD700))
-                .append(Component.text("===== Ticker 等待列表 ====="))
+                .append(Component.text("===== Ticker Waiting List ====="))
                 .appendNewline();
 
         int j = 0;
@@ -684,17 +689,17 @@ public class TickerTask implements Runnable {
             String head = number + ". " + entry.item.getItemName() + " ";
             builder.color(TextColor.color(0x00B7B7))
                     .append(Component.text(head)
-                            .hoverEvent(
-                                    Component.text("点击步过").clickEvent(ClickEvent.callback(p2 -> stepTo(entry, true)))))
-                    .append(Component.text(" ".repeat(Math.max(0, 12 - head.length()))))
-                    .append(Component.text("[运行到] ")
-                            .hoverEvent(Component.text("点击运行到此并停止"))
-                            .clickEvent(ClickEvent.callback(p2 -> stepTo(entry, false))))
-                    .append(Component.text("[步过] ")
-                            .hoverEvent(Component.text("点击步过"))
+                            .hoverEvent(Component.text("Click to step over"))
                             .clickEvent(ClickEvent.callback(p2 -> stepTo(entry, true))))
-                    .append(Component.text("[高亮] ")
-                            .hoverEvent(Component.text("点击高亮方块"))
+                    .append(Component.text(" ".repeat(Math.max(0, 12 - head.length()))))
+                    .append(Component.text("[Run To] ")
+                            .hoverEvent(Component.text("Click to run until this entry and stop"))
+                            .clickEvent(ClickEvent.callback(p2 -> stepTo(entry, false))))
+                    .append(Component.text("[Step Over] ")
+                            .hoverEvent(Component.text("Click to step over"))
+                            .clickEvent(ClickEvent.callback(p2 -> stepTo(entry, true))))
+                    .append(Component.text("[Highlight] ")
+                            .hoverEvent(Component.text("Click to highlight the block"))
                             .clickEvent(ClickEvent.callback(p2 -> {
                                 if (p2 instanceof Player p) {
                                     if (p.getLocation().getWorld()
@@ -711,8 +716,8 @@ public class TickerTask implements Runnable {
         int totalPage = (waiting.size() - 1) / PAGE_SIZE + 1;
         builder.color(TextColor.color(0xFFD700))
                 .append(Component.text()
-                        .append(Component.text("=== 上一页 < ")
-                                .hoverEvent(Component.text("点击跳转到上一页 (" + (page - 1) + ")"))
+                        .append(Component.text("=== Previous < ")
+                                .hoverEvent(Component.text("Click to go to the previous page (" + (page - 1) + ")"))
                                 .clickEvent(ClickEvent.callback(p2 -> {
                                     if (page - 1 < 1) {
                                         return;
@@ -720,8 +725,8 @@ public class TickerTask implements Runnable {
                                     showWaitingList(page - 1);
                                 })))
                         .append(Component.text(page + " / " + totalPage)
-                                .append(Component.text(" > 下一页 ===")
-                                        .hoverEvent(Component.text("点击跳转到下一页 (" + (page + 1) + ")"))
+                                .append(Component.text(" > Next ===")
+                                        .hoverEvent(Component.text("Click to go to the next page (" + (page + 1) + ")"))
                                         .clickEvent(ClickEvent.callback(p2 -> {
                                             if (page + 1 > totalPage) {
                                                 return;
