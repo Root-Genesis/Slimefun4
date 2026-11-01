@@ -17,6 +17,7 @@ import io.github.bakedlibs.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
 
@@ -35,11 +36,11 @@ public class SlimefunDatabaseManager {
         this.plugin = plugin;
 
         if (!new File(plugin.getDataFolder(), PROFILE_CONFIG_FILE_NAME).exists()) {
-            plugin.saveResource(PROFILE_CONFIG_FILE_NAME, false);
+            plugin.saveResource(PROFILE_CONFIG_FILE_NAME, true);
         }
 
         if (!new File(plugin.getDataFolder(), BLOCK_STORAGE_FILE_NAME).exists()) {
-            plugin.saveResource(BLOCK_STORAGE_FILE_NAME, false);
+            plugin.saveResource(BLOCK_STORAGE_FILE_NAME, true);
         }
 
         profileConfig = new Config(plugin, PROFILE_CONFIG_FILE_NAME);
@@ -52,7 +53,16 @@ public class SlimefunDatabaseManager {
         try {
             blockDataStorageType = StorageType.valueOf(blockStorageConfig.getString("storageType"));
             var readExecutorThread = blockStorageConfig.getInt("readExecutorThread");
-            var writeExecutorThread = blockStorageConfig.getInt("writeExecutorThread");
+            var writeExecutorThread =
+                    blockDataStorageType == StorageType.SQLITE ? 1 : blockStorageConfig.getInt("writeExecutorThread");
+            var connectionPoolSize = getConnectionPoolSize(blockDataStorageType, blockStorageConfig);
+
+            if (readExecutorThread + writeExecutorThread > connectionPoolSize) {
+                plugin.getLogger()
+                        .log(
+                                Level.WARNING,
+                                "The block-storage connection pool size is smaller than the total number of read/write threads, which may cause performance issues");
+            }
 
             initAdapter(blockDataStorageType, DataType.BLOCK_STORAGE, blockStorageConfig);
 
@@ -77,6 +87,14 @@ public class SlimefunDatabaseManager {
             var readExecutorThread = profileConfig.getInt("readExecutorThread");
             var writeExecutorThread =
                     profileStorageType == StorageType.SQLITE ? 1 : profileConfig.getInt("writeExecutorThread");
+            var connectionPoolSize = getConnectionPoolSize(profileStorageType, profileConfig);
+
+            if (readExecutorThread + writeExecutorThread > connectionPoolSize) {
+                plugin.getLogger()
+                        .log(
+                                Level.WARNING,
+                                "The profile-storage connection pool size is smaller than the total number of read/write threads, which may cause performance issues");
+            }
 
             initAdapter(profileStorageType, DataType.PLAYER_PROFILE, profileConfig);
             var profileController = ControllerHolder.createController(ProfileDataController.class, profileStorageType);
@@ -145,6 +163,10 @@ public class SlimefunDatabaseManager {
         }
     }
 
+    private int getConnectionPoolSize(StorageType storageType, Config config) {
+        return config.getInt(storageType.name().toLowerCase(Locale.ROOT) + ".maxConnection");
+    }
+
     @Nullable public ProfileDataController getProfileDataController() {
         return ControllerHolder.getController(ProfileDataController.class, profileStorageType);
     }
@@ -194,10 +216,23 @@ public class SlimefunDatabaseManager {
     }
 
     private void initDefaultVal() {
-        profileConfig.setDefaultValue("sqlite.maxConnection", 5);
-        profileConfig.save();
-        blockStorageConfig.setDefaultValue("sqlite.maxConnection", 5);
-        blockStorageConfig.setDefaultValue("dataLoadMode", "LOAD_WITH_CHUNK");
-        blockStorageConfig.save();
+        if (profileConfig.getString("sqlite.maxConnection") == null) {
+            profileConfig.setDefaultValue("sqlite.maxConnection", 5);
+            profileConfig.save();
+        }
+
+        boolean changed = false;
+
+        if (blockStorageConfig.getString("sqlite.maxConnection") == null) {
+            blockStorageConfig.setDefaultValue("sqlite.maxConnection", 5);
+            changed = true;
+        }
+
+        if (blockStorageConfig.getString("dataLoadMode") == null) {
+            blockStorageConfig.setDefaultValue("dataLoadMode", "LOAD_WITH_CHUNK");
+            changed = true;
+        }
+
+        if (changed) blockStorageConfig.save();
     }
 }

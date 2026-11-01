@@ -40,6 +40,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * This is an abstract super class for Entity Assemblers.
  *
+ * @param <T> the type of {@link Entity} this assembler spawns
  * @author TheBusyBiscuit
  * @see WitherAssembler
  * @see IronGolemAssembler
@@ -61,6 +62,14 @@ public abstract class AbstractEntityAssembler<T extends Entity> extends SimpleSl
 
     private int lifetime = 0;
 
+    /**
+     * Constructs a new AbstractEntityAssembler.
+     *
+     * @param itemGroup   The item group this item belongs to
+     * @param item        The item stack for this entity assembler
+     * @param recipeType  The recipe type used to craft this item
+     * @param recipe      The recipe to craft this item
+     */
     @ParametersAreNonnullByDefault
     protected AbstractEntityAssembler(
             ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
@@ -160,14 +169,18 @@ public abstract class AbstractEntityAssembler<T extends Entity> extends SimpleSl
         var blockData = StorageCacheUtils.getBlock(b.getLocation());
         String val;
         if (blockData == null || (val = blockData.getData(KEY_ENABLED)) == null || val.equals(String.valueOf(false))) {
-            menu.replaceExistingItem(22, new CustomItemStack(Material.GUNPOWDER, "&7Status: &4\u2718", "", "&e> Click to enable machine"));
+            menu.replaceExistingItem(
+                    22,
+                    new CustomItemStack(Material.GUNPOWDER, "&7Status: &4\u2718", "", "&e> Click to enable machine"));
             menu.addMenuClickHandler(22, (p, slot, item, action) -> {
                 StorageCacheUtils.setData(b.getLocation(), KEY_ENABLED, String.valueOf(true));
                 updateBlockInventory(menu, b);
                 return false;
             });
         } else {
-            menu.replaceExistingItem(22, new CustomItemStack(Material.REDSTONE, "&7Status: &2\u2714", "", "&e> Click to disable machine"));
+            menu.replaceExistingItem(
+                    22,
+                    new CustomItemStack(Material.REDSTONE, "&7Status: &2\u2714", "", "&e> Click to disable machine"));
             menu.addMenuClickHandler(22, (p, slot, item, action) -> {
                 StorageCacheUtils.setData(b.getLocation(), KEY_ENABLED, String.valueOf(false));
                 updateBlockInventory(menu, b);
@@ -182,7 +195,11 @@ public abstract class AbstractEntityAssembler<T extends Entity> extends SimpleSl
         menu.replaceExistingItem(
                 31,
                 new CustomItemStack(
-                        Material.PISTON, "&7Offset: &3" + offset + " Block(s)", "", "&fLeft Click: &7+0.1", "&fRight Click: &7-0.1"));
+                        Material.PISTON,
+                        "&7Offset: &3" + offset + " Block(s)",
+                        "",
+                        "&fLeft Click: &7+0.1",
+                        "&fRight Click: &7-0.1"));
         menu.addMenuClickHandler(31, (p, slot, item, action) -> {
             double offsetv =
                     NumberUtils.reparseDouble(Double.parseDouble(StorageCacheUtils.getData(b.getLocation(), KEY_OFFSET))
@@ -291,6 +308,11 @@ public abstract class AbstractEntityAssembler<T extends Entity> extends SimpleSl
         }
     }
 
+    /**
+     * Constructs the menu preset for this entity assembler.
+     *
+     * @param preset The {@link BlockMenuPreset} to construct
+     */
     protected void constructMenu(BlockMenuPreset preset) {
         preset.addItem(
                 1,
@@ -302,7 +324,12 @@ public abstract class AbstractEntityAssembler<T extends Entity> extends SimpleSl
                 ChestMenuUtils.getEmptyClickHandler());
         preset.addItem(
                 13,
-                new CustomItemStack(Material.CLOCK, "&7Cooldown: &b30 Seconds", "", "&fThis Machine takes up to half a Minute to operate", "&fso give it some Time!"),
+                new CustomItemStack(
+                        Material.CLOCK,
+                        "&7Cooldown: &b30 Seconds",
+                        "",
+                        "&fThis Machine takes up to half a Minute to operate",
+                        "&fso give it some Time!"),
                 ChestMenuUtils.getEmptyClickHandler());
     }
 
@@ -311,15 +338,46 @@ public abstract class AbstractEntityAssembler<T extends Entity> extends SimpleSl
         return EnergyNetComponentType.CONSUMER;
     }
 
+    /**
+     * Returns the amount of energy consumed per assembly operation.
+     *
+     * @return The energy consumption
+     */
     public abstract int getEnergyConsumption();
 
+    /**
+     * Returns the item used as the head/ingredient for entity assembly.
+     *
+     * @return The head item
+     */
     public abstract ItemStack getHead();
 
+    /**
+     * Returns the item used as the body/ingredient for entity assembly.
+     *
+     * @return The body item
+     */
     public abstract ItemStack getBody();
 
+    /**
+     * Returns the material used for the head border in the GUI.
+     *
+     * @return The head border material
+     */
     public abstract Material getHeadBorder();
 
+    /**
+     * Returns the material used for the body border in the GUI.
+     *
+     * @return The body border material
+     */
     public abstract Material getBodyBorder();
 
+    /**
+     * Spawns the entity at the given location.
+     *
+     * @param l The location to spawn the entity
+     * @return The spawned entity
+     */
     public abstract T spawnEntity(Location l);
 }

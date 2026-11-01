@@ -12,7 +12,7 @@ Download [SlimeGlue](https://github.com/Xzavier0722/SlimeGlue/) to ensure compat
 
 This is an English translation of the Slimefun 4 Chinese fork, maintained by @SaanPrasanna.
 
-For the original Chinese version and subscription plans, visit: [GuguProject Builds](https://builds.guizhanss.com/sf-subscription)
+For the original Chinese version and subscription plans, visit: [GuguProject Builds](https://resources.guizhanss.com/tools/slimefun-insider)
 
 ![Current Version](https://img.shields.io/github/v/release/SaanPrasanna/Slimefun4?include_prereleases)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
@@ -49,14 +49,14 @@ Check out the [Addon List](https://github.com/Slimefun/Slimefun4/wiki/Addons) to
 
 This English fork of Slimefun 4 can be downloaded from the [Releases page](https://github.com/SaanPrasanna/Slimefun4/releases).
 
-For the original Chinese version with auto-updates, visit [GuizhanBuild](https://builds.guizhanss.com/SlimefunGuguProject/Slimefun4).
+For the original Chinese version with auto-updates, visit [Guizhan Resources](https://resources.guizhanss.com/plugin/Slimefun4).
 
 Here are the differences between the two types of versions:
 
 |                      | Development Builds (Latest Updates)                                                       | "Stable" Builds                                                                            |
 |----------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| **Minecraft Version** | :video_game: 1.19.X - 1.21.X                                                              | :video_game: 1.16.X - 1.21.4                                                               |
-| **Java Version**      | :computer: **Java 17+**                                                                   | :computer: **Java 17+**                                                                    |
+| **Minecraft Version** | :video_game: 1.18.X - 26.3.X                                                              | :video_game: 1.18.X - 26.2.X                                                               |
+| **Java Version**      | :computer: **Java 21+**                                                                   | :computer: **Java 21+**                                                                    |
 | **Auto-Updates**      | :heavy_check_mark:                                                                        | :heavy_check_mark:                                                                         |
 | **Frequent Updates**  | :heavy_check_mark:                                                                        | :x:                                                                                        |
 | **Latest Content**    | :heavy_check_mark:                                                                        | :x:                                                                                        |
@@ -97,22 +97,22 @@ Development version (Slimefun Insider / DEV branch):
 </repository>
 ```
 
-Gradle: Add the following to your `build.gradle`:
+Gradle: Add the following to your `build.gradle.kts`:
 
 Release version:
-```groovy
+```kotlin
 repositories {
     maven {
-        url "https://maven.norain.city/releases"
+        url = uri("https://maven.norain.city/releases")
     }
 }
 ```
 
 Development version (Slimefun Insider / DEV branch):
-```groovy
+```kotlin
 repositories {
     maven {
-        url "https://maven.norain.city/snapshots"
+        url = uri("https://maven.norain.city/snapshots")
     }
 }
 ```
@@ -132,9 +132,9 @@ Maven:
 
 Gradle:
 
-```groovy
+```kotlin
 dependencies {
-    compileOnly 'com.github.SlimefunGuguProject:Slimefun4:DEV-SNAPSHOT'
+    compileOnly("com.github.SlimefunGuguProject:Slimefun4:DEV-SNAPSHOT")
 }
 ```
 </details>
@@ -152,10 +152,10 @@ git clone https://github.com/SaanPrasanna/Slimefun4.git --depth=1
 This will pull Slimefun's code to your local machine.
 
 Finally, open the `Slimefun4` folder, and open a terminal or command prompt in that folder and enter the following command to compile:
-- If you are on Windows: `.\mvnw.cmd package`
-- If you are on a Unix-like system: `.\mvnw package`
+- If you are on Windows: `.\gradlew.bat build`
+- If you are on a Unix-like system: `./gradlew build`
 
-After compilation is complete, you can find the compiled plugin file in the `Slimefun4/target` folder.
+After compilation is complete, you can find the compiled plugin file in the `Slimefun4/build/libs` folder.
 
 ## :framed_picture: Screenshots
 

@@ -119,7 +119,7 @@ class BackpackCommand extends SubCommand {
     }
 
     private void showBackpackMenu(OfflinePlayer owner, Player p, Set<PlayerBackpack> result, int page) {
-    var menu = new ChestMenu(owner.getName() + "'s Backpack List");
+        var menu = new ChestMenu(owner.getName() + "'s Backpack List");
         menu.setEmptySlotsClickable(false);
 
         var pages = result.size() / 36;

@@ -93,12 +93,14 @@ class VersionsCommand extends SubCommand {
 
             // Declare that we are NOT OFFICIAL build so no support from upstream
 
-        builder.append(Component.text("\nUnofficial build by SaanPrasanna", Style.style(NamedTextColor.WHITE)))
-            .append(Component.text(
-                "\nPlease do not screenshot this version info to Github for bug reports.\nReport issues on the English localization page first.\n", Style.style(NamedTextColor.RED)));
+            builder.append(Component.text("\nUnofficial build by SaanPrasanna", Style.style(NamedTextColor.WHITE)))
+                    .append(Component.text(
+                            "\nPlease do not screenshot this version info to Github for bug reports.\nReport issues on the English localization page first.\n",
+                            Style.style(NamedTextColor.RED)));
 
             if (Slimefun.getConfigManager().isBypassEnvironmentCheck()) {
-                builder.append(Component.text("\n\nEnvironment compatibility check is disabled", Style.style(NamedTextColor.RED)));
+                builder.append(Component.text(
+                        "\n\nEnvironment compatibility check is disabled", Style.style(NamedTextColor.RED)));
             }
 
             if (Slimefun.getConfigManager().isBypassItemLengthCheck()) {
@@ -117,15 +119,15 @@ class VersionsCommand extends SubCommand {
     private void addJavaVersion(@Nonnull net.kyori.adventure.text.TextComponent.Builder builder) {
         int version = NumberUtils.getJavaVersion();
 
-    if (version < RECOMMENDED_JAVA_VERSION) {
-        Component hover = Component.text("Your Java version is outdated!\n"
-            + "It is recommended to use Java "
-            + RECOMMENDED_JAVA_VERSION
-            + " or higher.\n"
-            + JAVA_VERSION_NOTICE);
+        if (version < RECOMMENDED_JAVA_VERSION) {
+            Component hover = Component.text("Your Java version is outdated!\n"
+                    + "It is recommended to use Java "
+                    + RECOMMENDED_JAVA_VERSION
+                    + " or higher.\n"
+                    + JAVA_VERSION_NOTICE);
 
-        builder.append(Component.text("Java " + version, NamedTextColor.RED).hoverEvent(HoverEvent.showText(hover)))
-            .append(Component.text("\n"));
+            builder.append(Component.text("Java " + version, NamedTextColor.RED).hoverEvent(HoverEvent.showText(hover)))
+                    .append(Component.text("\n"));
         } else {
             builder.append(Component.text("Java ", NamedTextColor.GREEN))
                     .append(Component.text(version + "\n", NamedTextColor.DARK_GREEN));
@@ -137,7 +139,8 @@ class VersionsCommand extends SubCommand {
         Collection<Plugin> addons = Slimefun.getInstalledAddons();
 
         if (addons.isEmpty()) {
-            builder.append(Component.text("No addon plugins installed", NamedTextColor.GRAY).decorate(TextDecoration.ITALIC));
+            builder.append(Component.text("No addon plugins installed", NamedTextColor.GRAY)
+                    .decorate(TextDecoration.ITALIC));
             return;
         }
 
@@ -165,28 +168,30 @@ class VersionsCommand extends SubCommand {
                             URI uri = URI.create(!url.contains("://") ? "https://" + url : url);
                             clickEvent = ClickEvent.openUrl(uri.toString());
                         }
-            Component hoverComp = Component.text()
-                .append(Component.text("Author(s): ", NamedTextColor.YELLOW))
-                .append(Component.text(authors, NamedTextColor.YELLOW))
-                .append(Component.text("\n> Click to open the bug tracker", NamedTextColor.GOLD))
-                .build();
+                        Component hoverComp = Component.text()
+                                .append(Component.text("Author(s): ", NamedTextColor.YELLOW))
+                                .append(Component.text(authors, NamedTextColor.YELLOW))
+                                .append(Component.text("\n> Click to open the bug tracker", NamedTextColor.GOLD))
+                                .build();
 
                         hoverEvent = HoverEvent.showText(hoverComp);
                     } catch (IllegalArgumentException e) {
-            Component hoverComp = Component.text()
-                .append(Component.text("Author(s): ", NamedTextColor.YELLOW))
-                .append(Component.text(authors, NamedTextColor.YELLOW))
-                .append(Component.text("\n> The bug tracker link provided by the addon is invalid!", NamedTextColor.RED))
-                .build();
+                        Component hoverComp = Component.text()
+                                .append(Component.text("Author(s): ", NamedTextColor.YELLOW))
+                                .append(Component.text(authors, NamedTextColor.YELLOW))
+                                .append(Component.text(
+                                        "\n> The bug tracker link provided by the addon is invalid!",
+                                        NamedTextColor.RED))
+                                .build();
 
                         hoverEvent = HoverEvent.showText(hoverComp);
                     }
 
                 } else {
-            Component hoverComp = Component.text()
-                .append(Component.text("Author(s): ", NamedTextColor.YELLOW))
-                .append(Component.text(authors, NamedTextColor.YELLOW))
-                .build();
+                    Component hoverComp = Component.text()
+                            .append(Component.text("Author(s): ", NamedTextColor.YELLOW))
+                            .append(Component.text(authors, NamedTextColor.YELLOW))
+                            .build();
 
                     hoverEvent = HoverEvent.showText(hoverComp);
                 }
@@ -202,21 +207,28 @@ class VersionsCommand extends SubCommand {
                             clickEvent = ClickEvent.openUrl(uri.toString());
                         }
                         Component hoverComp = Component.text()
-                                .append(Component.text("This plugin is disabled.\nPlease check the console for errors.", NamedTextColor.RED))
+                                .append(Component.text(
+                                        "This plugin is disabled.\nPlease check the console for errors.",
+                                        NamedTextColor.RED))
                                 .append(Component.text("\n> Click to open the bug tracker", NamedTextColor.DARK_RED))
                                 .build();
 
                         hoverEvent = HoverEvent.showText(hoverComp);
                     } catch (IllegalArgumentException e) {
                         Component hoverComp = Component.text()
-                                .append(Component.text("This plugin is disabled.\nPlease check the console for errors.", NamedTextColor.RED))
-                                .append(Component.text("\n> The bug tracker link provided by the plugin is invalid", NamedTextColor.DARK_RED))
+                                .append(Component.text(
+                                        "This plugin is disabled.\nPlease check the console for errors.",
+                                        NamedTextColor.RED))
+                                .append(Component.text(
+                                        "\n> The bug tracker link provided by the plugin is invalid",
+                                        NamedTextColor.DARK_RED))
                                 .build();
 
                         hoverEvent = HoverEvent.showText(hoverComp);
                     }
                 } else {
-                    Component hoverComp = Component.text("This plugin is disabled. Please check the console for errors.");
+                    Component hoverComp =
+                            Component.text("This plugin is disabled. Please check the console for errors.");
                     hoverEvent = HoverEvent.showText(hoverComp);
                 }
             }

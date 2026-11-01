@@ -42,8 +42,12 @@ public class MagicEyeOfEnder extends SimpleSlimefunItem<ItemUseHandler> {
                 SoundEffect.MAGICAL_EYE_OF_ENDER_USE_SOUND.playFor(p);
             } else {
                 // add message to warn player
-        Slimefun.getLocalization()
-            .sendMessage(p, "messages.usage", true, msg -> msg.replace("%usage%", "Wear the full Ender Armor set to launch pearls"));
+                Slimefun.getLocalization()
+                        .sendMessage(
+                                p,
+                                "messages.usage",
+                                true,
+                                msg -> msg.replace("%usage%", "Wear the full Ender Armor set to launch pearls"));
             }
         };
     }

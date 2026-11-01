@@ -1,3 +1,10 @@
+sf-cn:
+  timings:
+    started: '&aPerformance profiler has started.'
+    running: '&aPerformance profiler is running. Stop it to view the report.'
+    stopped: '&aPerformance profiler has stopped. View the report here: &f{0}'
+    warning: '&cAn error occurred while generating the performance report! Check the console for details.'
+
 commands:
   help: Displays this help screen
   cheat: Allows you to cheat Items
@@ -8,6 +15,20 @@ commands:
   search: Searches your Guide for the given term
   open_guide: Opens Slimefun's guide without using the book
   stats: Shows some Stats about a Player
+  id: Get the Slimefun ID of the item in your hand
+  cleardata:
+    description: Clear world data
+    success: '&aCleared &c {1} &a data for &c {0}'
+    block: block
+    oil: oil
+    worldNotFound: '&cWorld not found'
+    confirm: '&e Type /sf cleardata <World> <Type> confirm to confirm this operation. &cThis is IRREVERSIBLE!'
+  banitem:
+    description: Disable a Slimefun item
+    success: '&aDisabled successfully'
+  unbanitem:
+    description: Enable a Slimefun item
+    success: '&aEnabled successfully'
 
   research:
     description: Unlock/Reset researches for a player
@@ -20,6 +41,7 @@ commands:
     player-never-joined: '&4No player with that name could be found!'
     backpack-does-not-exist: '&4The specified backpack does not exist!'
     restored-backpack-given: '&aYour backpack has been restored and was added to your inventory!'
+    searching: '&eSearching...'
 
   charge:
     description: Charges the item you are holding
@@ -43,6 +65,21 @@ commands:
     description: "Reload config file"
     reload-success: "&aReloaded config file successfully."
     reload-failed: "&cReload config failed, you may need restart server to apply change, see console for more info."
+
+  migrate:
+    description: "Migrate old data"
+    confirm: "&cAre you sure you want to migrate data? Type /sf migrate confirm to start.\nDo not let players interact with Slimefun machines while migrating!"
+    started: "&aMigrating data..."
+    success: "&aMigrated data (%migrate_type%) to database successfully."
+    failed: "&cAn error occurred during migration, please check the console."
+    already-migrated: "&aNo data to migrate."
+    in-progress: "&aMigration is in progress..."
+
+  blockdata:
+    description: 'Manipulate Slimefun block data'
+
+  tick:
+    description: 'Manage Slimefun ticker breakpoints (tick freeze)'
 
 placeholderapi:
   profile-loading: 'Loading...'
@@ -159,11 +196,13 @@ actionbar:
   radiation: '&6Radiation Exposure Level: &c%level%&7/&e100'
 
 messages:
+  android-no-permission: "&cYour Android has stopped working because it entered a region where you do not have permission."
   not-researched: '&4You do not have enough knowledge to understand this. &cYou will need to unlock &f"%item%&f"'
   not-enough-xp: '&4You do not have enough XP to unlock this'
   unlocked: '&bYou have unlocked &7"%research%"'
   only-players: '&4This command is only for Players'
   unknown-player: '&4Unknown Player: &c%player%'
+  invalid-item-in-hand: '&eThe item in your hand is not a Slimefun item!'
   no-permission: '&4You do not have the required permission to do this'
   usage: '&4Usage: &c%usage%'
   not-online: '&4%player% &cis not online!'
@@ -197,6 +236,9 @@ messages:
     select: 'Select this recipe'
     temporarily-disabled: '&eThis Auto-Crafter was temporarily disabled. You can re-enable it at any time!'
     re-enabled: '&eThis Auto-Crafter was re-enabled!'
+    recipe-unavailable: |
+      &cThis item cannot be used. You may not have unlocked it yet, or it has been disabled by the server.
+      &7If you have not unlocked this item yet, please unlock it before crafting.
 
     tooltips:
       enabled:
@@ -282,6 +324,16 @@ messages:
   pickaxe-of-the-seeker:
     no-ores: '&cCannot find any nearby ores!'
 
+  tick-rate: '&eTick rate: &b%tick-rate%'
+  tick-query: '&eTick Freeze: %mode%&e, Tick rate: &b%tick-rate%'
+  tick-mode: '&eTick Freeze: %mode%'
+  not-found: '&cInvalid argument'
+  not-a-number: '&cPlease enter a number'
+  tick-freeze-predicate-reset: '&eThe custom Tick Freeze filter has been reset'
+  tick-freeze-on: '&aON'
+  tick-freeze-off: '&cOFF'
+  wrong-world: '&cYou are not in the same world! Unable to highlight the block!'
+
 machines:
   pattern-not-found: '&eSorry, I could not recognize this Recipe. Please place the Items in the correct pattern into the Dispenser.'
   unknown-material: '&eSorry, I could not recognize the Item in my dispenser. Please put something in that I know.'
@@ -298,6 +350,7 @@ machines:
 
   ANCIENT_PEDESTAL:
     obstructed: '&4Pedestal is obstructed! &cRemove anything above the pedestal!'
+    in-use: '&4There are still items on the pedestals!'
 
   HOLOGRAM_PROJECTOR:
     enter-text: '&7Please enter your desired Hologram Text into your Chat. &r(Color Codes are supported!)'
@@ -343,6 +396,9 @@ machines:
     no-permission: '&4You do not seem to have permission to operate an Industrial Miner here!'
     finished: '&eYour Industrial Miner has finished! It obtained a total of %ores% ore(s)!'
 
+  TABLE_SAW:
+    no-slimefun-item: '&cYou cannot use Slimefun items on the Table Saw!'
+
 anvil:
   not-working: '&4You cannot use Slimefun items in an anvil!'
   mcmmo-salvaging: '&4You cannot salvage Slimefun items!'
@@ -363,6 +419,7 @@ backpack:
   already-open: '&cSorry, this Backpack is open somewhere else!'
   no-stack: '&cYou cannot stack Backpacks'
   set-name: '&ePlease enter a name for your backpack in the chat. &7(Color codes are supported!)'
+  not-backpack-owner: '&cThe owner of this backpack is offline, you are not allowed to use it!'
   not-original-item: '&cYou must be holding the original backpack item!'
 
 workbench:
@@ -462,6 +519,7 @@ android:
       cannot-add-yourself: '&cYou cannot add yourself!'
       add-success: '&aAdded trusted player %player% successfully.'
       delete-success: '&aDeleted trusted player %player% successfully.'
+      reach-limit: '&cTrusted player limit reached (10). Please remove an existing player first.'
 
 languages:
   default: 'Server-Default'

@@ -151,7 +151,7 @@ public class IndustrialMiner extends MultiBlockMachine {
      *            The item that shall be consumed
      */
     public void addFuelType(int ores, @Nonnull ItemStack item) {
-    Validate.isTrue(ores > 1 && ores % 2 == 0, "The number of ores must be >= 2 and a multiple of 2.");
+        Validate.isTrue(ores > 1 && ores % 2 == 0, "The number of ores must be >= 2 and a multiple of 2.");
         Validate.notNull(item, "The fuel item cannot be null");
 
         fuelTypes.add(new MachineFuel(ores / 2, item));

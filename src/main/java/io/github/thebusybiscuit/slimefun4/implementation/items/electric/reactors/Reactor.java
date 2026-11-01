@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.slimefun4.implementation.items.electric.reactors;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.ASlimefunDataContainer;
 import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 import io.github.bakedlibs.dough.items.CustomItemStack;
@@ -197,7 +198,14 @@ public abstract class Reactor extends AbstractEnergyProvider
 
         if (port != null) {
             menu.replaceExistingItem(
-                    INFO_SLOT, new CustomItemStack(Material.GREEN_WOOL, "&7Access Port", "", "&6Connected", "", "&7> Click to view access port"));
+                    INFO_SLOT,
+                    new CustomItemStack(
+                            Material.GREEN_WOOL,
+                            "&7Access Port",
+                            "",
+                            "&6Connected",
+                            "",
+                            "&7> Click to view access port"));
             menu.addMenuClickHandler(INFO_SLOT, (p, slot, item, action) -> {
                 port.open(p);
                 updateInventory(menu, b);
@@ -207,7 +215,14 @@ public abstract class Reactor extends AbstractEnergyProvider
         } else {
             menu.replaceExistingItem(
                     INFO_SLOT,
-                    new CustomItemStack(Material.RED_WOOL, "&7Access Port", "", "&cNot Connected", "", "&7The port must be placed", "&73 blocks above the reactor!"));
+                    new CustomItemStack(
+                            Material.RED_WOOL,
+                            "&7Access Port",
+                            "",
+                            "&cNot Connected",
+                            "",
+                            "&7The port must be placed",
+                            "&73 blocks above the reactor!"));
             menu.addMenuClickHandler(INFO_SLOT, (p, slot, item, action) -> {
                 updateInventory(menu, b);
                 menu.open(p);
@@ -241,7 +256,12 @@ public abstract class Reactor extends AbstractEnergyProvider
         if (this instanceof NuclearReactor) {
             preset.addItem(
                     1,
-                    new CustomItemStack(getFuelIcon(), "&7Fuel Slot", "", "&fThis Slot accepts radioactive Fuel such as:", "&2Uranium &for &aNeptunium"),
+                    new CustomItemStack(
+                            getFuelIcon(),
+                            "&7Fuel Slot",
+                            "",
+                            "&fThis Slot accepts radioactive Fuel such as:",
+                            "&2Uranium &for &aNeptunium"),
                     ChestMenuUtils.getEmptyClickHandler());
         } else if (this instanceof NetherStarReactor) {
             preset.addItem(
@@ -250,9 +270,14 @@ public abstract class Reactor extends AbstractEnergyProvider
                     ChestMenuUtils.getEmptyClickHandler());
         } else {
             preset.addItem(
-                1,
-                new CustomItemStack(getFuelIcon(), "&7Fuel Slot", "", "&fThis Slot accepts radioactive Fuel such as:", "&2Uranium &for &aNeptunium"),
-                ChestMenuUtils.getEmptyClickHandler());
+                    1,
+                    new CustomItemStack(
+                            getFuelIcon(),
+                            "&7Fuel Slot",
+                            "",
+                            "&fThis Slot accepts radioactive Fuel such as:",
+                            "&2Uranium &for &aNeptunium"),
+                    ChestMenuUtils.getEmptyClickHandler());
         }
 
         for (int i : border_2) {
@@ -264,13 +289,22 @@ public abstract class Reactor extends AbstractEnergyProvider
 
         if (needsCooling()) {
             preset.addItem(
-                    7, new CustomItemStack(getCoolant(), "&bCoolant Slot", "", "&fPlace Coolant here", "&4Without Coolant, your reactor", "&4will explode instantly"));
+                    7,
+                    new CustomItemStack(
+                            getCoolant(),
+                            "&bCoolant Slot",
+                            "",
+                            "&fPlace Coolant here",
+                            "&4Without Coolant, your reactor",
+                            "&4will explode instantly"));
         } else {
             preset.addItem(7, new CustomItemStack(Material.BARRIER, "&bCoolant", "", "&fPlace Coolant here"));
 
             for (int i : border_4) {
                 preset.addItem(
-                        i, new CustomItemStack(Material.BARRIER, "&cNo Coolant required"), ChestMenuUtils.getEmptyClickHandler());
+                        i,
+                        new CustomItemStack(Material.BARRIER, "&cNo Coolant required"),
+                        ChestMenuUtils.getEmptyClickHandler());
             }
         }
     }
@@ -279,7 +313,7 @@ public abstract class Reactor extends AbstractEnergyProvider
     protected ReactorMode getReactorMode(@Nonnull Location l) {
         ReactorMode mode = ReactorMode.GENERATOR;
 
-        var blockData = StorageCacheUtils.getBlock(l);
+        var blockData = StorageCacheUtils.getDataContainer(l);
         if (blockData != null && ReactorMode.PRODUCTION.toString().equals(blockData.getData(MODE))) {
             mode = ReactorMode.PRODUCTION;
         }
@@ -338,7 +372,7 @@ public abstract class Reactor extends AbstractEnergyProvider
     }
 
     @Override
-    public int getGeneratedOutput(Location l, SlimefunBlockData data) {
+    public int getGeneratedOutput(@Nonnull Location l, @Nonnull ASlimefunDataContainer data) {
         BlockMenu inv = StorageCacheUtils.getMenu(l);
         BlockMenu accessPort = getAccessPort(inv, l);
         FuelOperation operation = processor.getOperation(l);
@@ -360,7 +394,7 @@ public abstract class Reactor extends AbstractEnergyProvider
 
     private int generateEnergy(
             @Nonnull Location l,
-            @Nonnull SlimefunBlockData data,
+            @Nonnull ASlimefunDataContainer data,
             @Nonnull BlockMenu inv,
             @Nullable BlockMenu accessPort,
             @Nonnull FuelOperation operation) {
@@ -393,7 +427,7 @@ public abstract class Reactor extends AbstractEnergyProvider
     }
 
     @Override
-    public boolean willExplode(Location l, SlimefunBlockData data) {
+    public boolean willExplode(Location l, ASlimefunDataContainer data) {
         boolean explosion = explosionsQueue.contains(l);
 
         if (explosion) {
@@ -401,7 +435,7 @@ public abstract class Reactor extends AbstractEnergyProvider
                 ReactorExplodeEvent event = new ReactorExplodeEvent(l, Reactor.this);
                 Bukkit.getPluginManager().callEvent(event);
 
-                data.getBlockMenu().close();
+                ((SlimefunBlockData) data).getBlockMenu().close();
                 removeHologram(l.getBlock());
             });
 

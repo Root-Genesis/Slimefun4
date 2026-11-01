@@ -48,7 +48,7 @@ public class SlimefunUniversalBlockData extends SlimefunUniversalData {
 
         var data = getData(UniversalDataTrait.BLOCK.getReservedKey());
 
-    // Automatically repair missing location data
+        // Automatically repair missing location data
         if (lastPresent != null) {
             if (data == null) {
                 setTraitData(UniversalDataTrait.BLOCK, LocationUtils.getLocKey(lastPresent.toLocation()));
@@ -62,7 +62,12 @@ public class SlimefunUniversalBlockData extends SlimefunUniversalData {
         }
 
         try {
-            lastPresent = new BlockPosition(LocationUtils.toLocation(data));
+            var location = LocationUtils.toLocation(data);
+            if (location.getWorld() == null) {
+                return null;
+            }
+
+            lastPresent = new BlockPosition(location);
         } catch (RuntimeException e) {
             if (data.isEmpty()) {
                 return null;
@@ -78,8 +83,13 @@ public class SlimefunUniversalBlockData extends SlimefunUniversalData {
     private void oldLocationFix(String data) {
         try {
             var lArr = data.split(",");
+            var world = Bukkit.getWorld(lArr[0].replace("[world=", ""));
+            if (world == null) {
+                return;
+            }
+
             var bp = new BlockPosition(
-                    Bukkit.getWorld(lArr[0].replace("[world=", "")),
+                    world,
                     (int) Double.parseDouble(lArr[1].replace("x=", "")),
                     (int) Double.parseDouble(lArr[2].replace("y=", "")),
                     (int) Double.parseDouble(lArr[3].replace("z=", "").replace("]", "")));

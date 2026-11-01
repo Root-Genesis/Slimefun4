@@ -29,7 +29,10 @@ public class VersionedMiddleClickListener implements Listener {
             plugin.getServer().getPluginManager().registerEvents(this, plugin);
         } catch (Throwable e) {
             Slimefun.logger()
-                    .log(Level.WARNING, "Failed to initialize version compatibility module for middle-click listener. Some functionality may not work correctly.", e);
+                    .log(
+                            Level.WARNING,
+                            "Failed to initialize version compatibility module for middle-click listener. Some functionality may not work correctly.",
+                            e);
         }
     }
 
@@ -42,7 +45,7 @@ public class VersionedMiddleClickListener implements Listener {
                 && pickBlockEventClass.isInstance(event)) {
             try {
                 Block block = (Block) getBlockMethod.invoke(event);
-                SlimefunItem sfItem = StorageCacheUtils.getSfItem(block.getLocation());
+                SlimefunItem sfItem = StorageCacheUtils.getSlimefunItem(block.getLocation());
                 if (sfItem == null) {
                     return;
                 }

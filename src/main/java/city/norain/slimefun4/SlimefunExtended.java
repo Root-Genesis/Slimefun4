@@ -12,7 +12,9 @@ import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import lombok.Getter;
+import net.guizhanss.guizhanlib.minecraft.utils.MinecraftVersionUtil;
 import org.apache.logging.log4j.core.config.Configurator;
+import org.bukkit.Server;
 
 public final class SlimefunExtended {
     private static SlimefunMigrateListener migrateListener = new SlimefunMigrateListener();
@@ -20,8 +22,75 @@ public final class SlimefunExtended {
     @Getter
     private static boolean databaseDebugMode = false;
 
-    @Getter
+    @Deprecated(since = "2026.1.1", forRemoval = true)
     private static MinecraftVersion minecraftVersion;
+
+    @Deprecated(since = "2026.1.1", forRemoval = true)
+    public static MinecraftVersion getMinecraftVersion() {
+        return minecraftVersion;
+    }
+
+    /**
+     * Returns the Minecraft version details of the current server, including the major, minor and patch version.
+     * For example, 26.1.2 returns (26, 1, 2), while 26.1 returns (26, 1, 0).
+     *
+     * Returns null if the server version cannot be recognized.
+     *
+     * @since 2026.1
+     * @param server
+     * @return
+     */
+    public static ServerVersion getServerVerDetail(Server server) {
+        String mcVersion = server.getMinecraftVersion();
+
+        if (mcVersion.isBlank()) {
+            return null;
+        }
+
+        // Extract the numeric part of the version string
+        String[] versionPart = mcVersion.split("\\.");
+
+        // Possibly a snapshot or pre-release version?
+        if (versionPart.length < 2) {
+            return null;
+        }
+
+        try {
+            int majorVersion = Integer.parseInt(versionPart[0]);
+
+            // Since 26.1, Minecraft versions use the year as the major version number
+            if (majorVersion != 1 && majorVersion < 26) {
+                return null;
+            }
+
+            int minorVersion = Integer.parseInt(versionPart[1]);
+            int patchVersion = versionPart.length > 2 ? Integer.parseInt(versionPart[2]) : 0;
+            return new ServerVersion(majorVersion, minorVersion, patchVersion);
+        } catch (NumberFormatException e) {
+            server.getLogger().log(Level.WARNING, "Unable to parse the current server version: " + mcVersion, e);
+            return null;
+        }
+    }
+
+    /**
+     * @since 2026.1
+     * @param major the major version number (e.g., 26 for Minecraft 26.1)
+     * @param minor
+     * @return
+     */
+    public static boolean isAtLeast(int major, int minor) {
+        return MinecraftVersionUtil.isAtLeast(major, minor);
+    }
+
+    /**
+     * @since 2026.1
+     * @param major the major version number (e.g., 26 for Minecraft 26.1)
+     * @param minor
+     * @return
+     */
+    public static boolean isAtLeast(int major, int minor, int patch) {
+        return MinecraftVersionUtil.isAtLeast(major, minor, patch);
+    }
 
     private static void checkDebug() {
         if ("true".equals(System.getProperty("slimefun.database.debug"))) {
@@ -39,9 +108,9 @@ public final class SlimefunExtended {
     public static boolean checkEnvironment(@Nonnull Slimefun sf) {
         try {
             minecraftVersion = MinecraftVersion.of(sf.getServer());
-        } catch (UnknownServerVersionException e) {
-            sf.getLogger().log(Level.WARNING, "Unable to recognize your server version :(");
-            return false;
+        } catch (UnknownServerVersionException ignored) {
+            // sf.getLogger().log(Level.WARNING, "Unable to recognize your server version :(");
+            // return false;
         }
 
         if (EnvironmentChecker.checkHybridServer()) {

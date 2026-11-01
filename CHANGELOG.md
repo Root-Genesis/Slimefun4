@@ -1,4 +1,60 @@
-# Table of contents
+# Changelog (English fork)
+
+All notable changes to this English fork of Slimefun 4 are documented here.
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioning: [SemVer](https://semver.org/).
+The original Slimefun changelog follows below.
+
+## [Unreleased]
+
+## [1.1.0] - 2026-11-01
+Brings in six months of updates from the SlimefunGugu project: support for Minecraft 26.x, a new `/sf tick` command for finding laggy machines, more compact item storage, and a fix for a backpack duplication glitch, all in English.
+
+- **Minecraft 26.x:** Slimefun recognises the new year-based Minecraft versions 26.1, 26.2 and 26.3, next to 1.18 to 1.21. Servers whose version can't be read keep running instead of disabling Slimefun.
+- **Java 21:** Slimefun now needs Java 21 or newer.
+- **`/sf tick`:** A new admin command (permission `slimefun.command.tick`, operators by default) for tracking down machines that slow the server.
+  - `/sf tick` turns Tick Freeze on or off. While it's on, Slimefun machines wait in a queue instead of running.
+  - `/sf tick show` lists the queue. Click an entry to step over it, click **[Run To]** to run every machine up to it, and click **[Highlight]** to make its block glow.
+  - `/sf tick <ITEM_ID>`, `/sf tick at` (the block you look at or the item in your hand) and `/sf tick [world] <x> <y> <z>` pause only matching machines. `/sf tick rate <n>` changes the tick rate, and `/sf tick query` shows the current state.
+  - A warning in the console names any machine whose tick runs too long, with its location.
+- **Smaller database:** Items in machines, backpacks and other block inventories are stored as compact binary data instead of Base64 text. Existing data is converted once, the first time the server starts with this version. The conversion runs in a single transaction, so if any item can't be converted, nothing changes and the database stays on its old version. Back up your database before updating.
+- **Backpacks:** Opening the same backpack twice at the same moment is now refused, which closes a glitch that could duplicate items.
+- **Missing worlds:** Machines saved in a world that isn't loaded (for example, a world that was removed, or one a world manager plugin loads later) no longer cause errors when Slimefun loads its data.
+- **Performance:** Explosive tools break large areas faster, block data lookups are cheaper, and the timings profiler measures machines more accurately.
+- **Fixes:**
+  - When the Miner Android breaks a container such as a chest, it now collects the container's contents with the block, and it no longer skips blocks that drop nothing.
+  - Bandages, Splints, Medical Supplies and the Vampire Blade work on older and newer server versions alike.
+  - `/sf banitem` with an empty hand now shows its error message instead of nothing.
+  - Clicking an entry in the `/sf tick show` list now steps over it as intended.
+- **Translations:** All new messages, console warnings and menus are in English, including the tick commands, backpack messages, the Auto-Crafter "recipe unavailable" message, the Table Saw and the Portable Dustbin title.
+- **Under the hood:** The plugin is built with Gradle instead of Maven. Run `./gradlew build` and find the jar in `build/libs/`.
+
+## [1.0.4] - 2026-04-14
+- **Upstream sync:** Synced with the latest SlimefunGugu updates, keeping the English translations.
+- **Machines:** The Auto Brewer is improved and the GEO Miner is fixed.
+- **Under the hood:** Updated dependencies.
+
+## [1.0.3] - 2025-11-20
+- **Translations:** Clearer, more consistent English across messages and item names.
+- **Backpacks:** Backpack item definitions are cleaned up.
+
+## [1.0.2] - 2025-11-15
+- **Fixes:** Small fixes to the first release.
+
+## [1.0.1] - 2025-11-15
+The first release of the English translation of the SlimefunGugu fork of Slimefun 4.
+
+[Unreleased]: https://github.com/SaanPrasanna/Slimefun4/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/SaanPrasanna/Slimefun4/compare/exp...v1.1.0
+[1.0.4]: https://github.com/SaanPrasanna/Slimefun4/compare/v1.0.3...exp
+[1.0.3]: https://github.com/SaanPrasanna/Slimefun4/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/SaanPrasanna/Slimefun4/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/SaanPrasanna/Slimefun4/commits/v1.0.1
+
+---
+
+# Original Slimefun changelog
+
+## Table of contents
 - [Release Candidate 38 (TBD)](#release-candidate-38-tbd)
 - [Release Candidate 37 (25 Feb 2024)](#release-candidate-37-25-feb-2024)
 - [Release Candidate 36 (20 Dec 2023)](#release-candidate-36-20-dec-2023)

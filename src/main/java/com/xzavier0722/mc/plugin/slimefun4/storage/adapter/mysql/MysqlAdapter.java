@@ -60,7 +60,7 @@ public class MysqlAdapter extends SqlCommonAdapter<MysqlConfig> {
 
     @Override
     public void setData(RecordKey key, RecordSet item) {
-        var data = item.getAll();
+        var data = item.getAllValues();
         var fields = data.keySet();
         var fieldStr = SqlUtils.buildFieldStr(fields);
         if (fieldStr.isEmpty()) {
@@ -99,7 +99,7 @@ public class MysqlAdapter extends SqlCommonAdapter<MysqlConfig> {
                                         ", ",
                                         updateFields.stream()
                                                 .map(field -> {
-                                                    var val = item.get(field);
+                                                    var val = item.getValue(field);
                                                     if (val == null) {
                                                         throw new IllegalArgumentException(
                                                                 "Cannot find value in RecordSet for the specific key: "
@@ -224,7 +224,7 @@ public class MysqlAdapter extends SqlCommonAdapter<MysqlConfig> {
                 + FIELD_INVENTORY_SLOT
                 + " TINYINT UNSIGNED NOT NULL, "
                 + FIELD_INVENTORY_ITEM
-                + " TEXT NOT NULL, "
+                + " MEDIUMBLOB NOT NULL, "
                 + "FOREIGN KEY ("
                 + FIELD_BACKPACK_ID
                 + ") "
@@ -312,7 +312,7 @@ public class MysqlAdapter extends SqlCommonAdapter<MysqlConfig> {
                 + FIELD_INVENTORY_SLOT
                 + " TINYINT UNSIGNED NOT NULL, "
                 + FIELD_INVENTORY_ITEM
-                + " TEXT NOT NULL, "
+                + " MEDIUMBLOB NOT NULL, "
                 + "FOREIGN KEY ("
                 + FIELD_LOCATION
                 + ") "
@@ -339,7 +339,7 @@ public class MysqlAdapter extends SqlCommonAdapter<MysqlConfig> {
                 + FIELD_INVENTORY_SLOT
                 + " TINYINT UNSIGNED NOT NULL, "
                 + FIELD_INVENTORY_ITEM
-                + " TEXT NOT NULL,"
+                + " MEDIUMBLOB NOT NULL,"
                 + "PRIMARY KEY ("
                 + FIELD_UNIVERSAL_UUID
                 + ", "
@@ -392,15 +392,13 @@ public class MysqlAdapter extends SqlCommonAdapter<MysqlConfig> {
     }
 
     private void createTableMetadataTable() {
-        executeSql(MessageFormat.format(
-                """
+        executeSql(MessageFormat.format("""
                 CREATE TABLE IF NOT EXISTS {0}
                 (
                     {1} VARCHAR(100) UNIQUE NOT NULL,
                     {2} TEXT NOT NULL
                 );
-                """,
-                tableMetadataTable, FIELD_TABLE_METADATA_KEY, FIELD_TABLE_METADATA_VALUE));
+                """, tableMetadataTable, FIELD_TABLE_METADATA_KEY, FIELD_TABLE_METADATA_VALUE));
 
         if (Slimefun.isNewlyInstalled()) {
             executeSql(MessageFormat.format(

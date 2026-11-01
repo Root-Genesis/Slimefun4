@@ -264,7 +264,7 @@ public class PlayerProfile {
             }
         }
 
-        if (waypoints.size() < 21) {
+        if (waypoints.size() < Slimefun.getGPSNetwork().getMaxWaypoints()) {
             waypoints.add(waypoint);
 
             waypointsFile.setValue(waypoint.getId(), waypoint.getLocation());
@@ -365,10 +365,10 @@ public class PlayerProfile {
         float progress = Math.round(((unlockedResearches * 100.0F) / allResearches) * 100.0F) / 100.0F;
 
         sender.sendMessage("");
-    sender.sendMessage(ChatColors.color("&7Player research statistics: &b" + getPlayer()));
+        sender.sendMessage(ChatColors.color("&7Player research statistics: &b" + getPlayer()));
         sender.sendMessage("");
-    sender.sendMessage(ChatColors.color("&7Research level: " + ChatColor.AQUA + getTitle()));
-    sender.sendMessage(ChatColors.color("&7Research progress: "
+        sender.sendMessage(ChatColors.color("&7Research level: " + ChatColor.AQUA + getTitle()));
+        sender.sendMessage(ChatColors.color("&7Research progress: "
                 + NumberUtils.getColorFromPercentage(progress)
                 + progress
                 + " &r% "
@@ -378,7 +378,7 @@ public class PlayerProfile {
                 + " / "
                 + allResearches
                 + ')'));
-    sender.sendMessage(ChatColors.color("&7Total unlocking XP cost: " + ChatColor.AQUA + levels));
+        sender.sendMessage(ChatColors.color("&7Total unlocking XP cost: " + ChatColor.AQUA + levels));
     }
 
     /**

@@ -1,43 +1,47 @@
-# 贡献指南
+# Contribution Guidelines
 
-在对 Slimefun 汉化版进行代码前，必须先阅读此贡献指南。
+Before contributing code to the Slimefun (English Fork), please read these guidelines carefully.
 
-# 设置环境
+# Environment Setup
 
-我们提供了一个自动化格式检查系统，请使用 `mvn install` 进行初始化。
+We provide an automated code style check system. Please run `./gradlew spotlessApply` to initialize the environment.
 
-本项目已经提供 `.editorconfig` 用于控制代码样式。如果你有自己的代码样式风格，请在对本仓库进行贡献前切换为当前仓库的风格配置。
+The project includes an `.editorconfig` file to control code style. If you have your own code style, please switch to the project's style before contributing.
 
-# 提交信息规范
+# Branching Policy
 
-本项目**强制使用** [约定式提交](https://www.conventionalcommits.org/zh-hans/v1.0.0/) 的提交信息规范。
+Before starting your contribution, ensure your code is based on the `dev` branch.
 
-> 简单来说, 你的提交信息需要包含以下内容:
-> 
-> <类型>[可选 范围]: <描述>
-> 
-> 例如一个添加了新功能的提交应为 feat(item): add new item to Slimefun
+# Commit Message Convention
 
-如果你提交的代码中解决或处理了 Issue 中的问题，请你在主提交消息外显式声明。
+This project **strictly enforces** the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 
-> 如 resolves #114514, fix #114514 等
+> In short, your commit message should follow this format:
+>
+> <type>[optional scope]: <description>
+>
+> For example, a commit adding a new feature should be: `feat(item): add new item to Slimefun`
 
-如果是修复请在主提交消息上声明，不必重复声明。
+If your code fixes an issue, explicitly state it in the commit body (not just the title).
 
-我们支持的类型前缀正则如下：`(feat(ure)?|fix|docs|style|refactor|ci|chore|perf|build|test|revert|trans)`
+> e.g., `resolves #114514` or `fix #114514`
 
-另外的, 如果是与翻译相关的提交，类型应为 trans。
+If the fix is obvious and described in the title, duplication is not necessary.
 
-# 代码规范
+Supported type prefixes: `(feat(ure)?|fix|docs|style|refactor|ci|chore|perf|build|test|revert|trans)`
 
-**!! 本项目使用 4 空格缩进 !!**
+Additionally, use the `trans` type for translation-related commits.
 
-请不要过度缩减代码长度, 空格少了 Slimefun 也不会因此跑得更快.
+# Code Style
 
-我们使用了 Spotless 作为代码格式化工具，在提交前你**必须**使用 `mvn spotless:check spotless:apply` 来自动格式化你的代码，否则将会被格式检查器拦截 PR。
+**!! This project uses 4-space indentation !!**
 
-# 提交代码类型
+Please do not over-condense code. Slimefun won't run faster just because you used fewer spaces.
 
-你提交的代码可以是修复、新增内容和 API。
+We use **Spotless** as our formatting tool. Before submitting, you **must** run `./gradlew spotlessCheck spotlessApply` to auto-format your code; otherwise, the CI will block your PR.
 
-下游代码现在支持提交 API 相关代码，开发者们可以通过 jitpack 依赖汉化版的 Slimefun。
+# Contribution Types
+
+You can submit bug fixes, new content, or API improvements.
+
+The fork currently supports API-related contributions, and developers can depend on this English fork via JitPack.

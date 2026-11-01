@@ -5,66 +5,110 @@ import com.xzavier0722.mc.plugin.slimefun4.storage.controller.StorageType;
 import io.github.thebusybiscuit.slimefun4.core.debug.Debug;
 import io.github.thebusybiscuit.slimefun4.core.debug.TestCase;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 public class DataUtils {
-    public static String itemStack2String(ItemStack itemStack) {
+    /**
+     * Serializes an {@link ItemStack} into a Base64 string compatible with the legacy API.
+     *
+     * @param itemStack The {@link ItemStack} to serialize
+     * @return The Base64 encoded item data
+     * @deprecated Use {@link #serializeItemStackBytes(ItemStack)} to avoid the extra space overhead of Base64
+     */
+    @Deprecated
+    public static String serializeItemStack(ItemStack itemStack) {
+        var itemData = serializeItemStackBytes(itemStack);
+        return itemData.length == 0 ? "" : Base64.getEncoder().encodeToString(itemData);
+    }
+
+    public static byte[] serializeItemStackBytes(ItemStack itemStack) {
         Debug.log(TestCase.BACKPACK, "Serializing itemstack: " + itemStack);
 
         if (itemStack == null) {
-            return "";
+            return new byte[0];
         }
 
-        var stream = new ByteArrayOutputStream();
-        try (var bs = new BukkitObjectOutputStream(stream)) {
-            bs.writeObject(itemStack);
-            var itemStr = Base64Coder.encodeLines(stream.toByteArray());
+        try {
+            var itemData = ItemStackDataCodec.serialize(itemStack);
 
             if (!Slimefun.getConfigManager().isBypassItemLengthCheck()
-                    && Slimefun.getDatabaseManager().getBlockDataStorageType() != StorageType.SQLITE
-                    && itemStr.length() > 65535) {
-        throw new IllegalArgumentException("Detected an oversized item. Please contact the plugin developer responsible for that item: " + StringUtil.itemStackToString(itemStack)
-                        + ", size = " + itemStr.length());
+                    && Slimefun.getDatabaseManager().getBlockDataStorageType() == StorageType.MYSQL
+                    && itemData.length > 16_777_215) {
+
+                throw new IllegalArgumentException(
+                        "Detected an oversized item. Please contact the plugin developer responsible for that item: "
+                                + StringUtil.itemStackToString(itemStack) + ", size = " + itemData.length);
             }
 
-            return itemStr;
+            return itemData;
         } catch (Throwable e) {
-            e.printStackTrace();
-            return "";
+            Slimefun.logger()
+                    .log(
+                            Level.SEVERE,
+                            "An error occurred while serializing an item, storing an empty value instead.",
+                            e);
+            return new byte[0];
         }
     }
 
-    public static ItemStack string2ItemStack(String base64Str) {
-        if (base64Str == null || base64Str.isEmpty() || base64Str.isBlank()) {
+    /**
+     * Deserializes an {@link ItemStack} from the database. Supports both the current native binary format and the legacy Bukkit object stream format.
+     *
+     * @param itemData The binary data to deserialize
+     * @return The deserialized {@link ItemStack}
+     */
+    @Nullable public static ItemStack deserializeItemStack(byte[] itemData) {
+        if (itemData == null || itemData.length == 0) {
             return null;
         }
 
-        Debug.log(TestCase.BACKPACK, "Deserializing itemstack: " + base64Str);
+        Debug.log(TestCase.BACKPACK, "Deserializing itemstack: " + itemData.length + " bytes");
 
-        var stream = new ByteArrayInputStream(Base64Coder.decodeLines(base64Str));
-        try (var bs = new BukkitObjectInputStream(stream)) {
-            var result = (ItemStack) bs.readObject();
+        try {
+            var result = ItemStackDataCodec.deserialize(itemData);
 
             Debug.log(TestCase.BACKPACK, "Deserialized itemstack: " + result);
 
             if (result.getType().isAir()) {
-                Slimefun.logger().log(Level.WARNING, "Failed to deserialize item from the database! The corresponding item cannot be displayed.");
+                Slimefun.logger()
+                        .log(
+                                Level.WARNING,
+                                "Failed to deserialize item from the database! The corresponding item cannot be displayed.");
             }
 
             return result;
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            throw new RuntimeException(
+                    "An error occurred while deserializing an item, the item cannot be displayed", ex);
+        }
+    }
+
+    /**
+     * Deserializes an item from a Base64 string compatible with the legacy API.
+     *
+     * @param base64Str The Base64 encoded item data
+     * @return The deserialized item
+     * @deprecated Use {@link #deserializeItemStack(byte[])} instead
+     */
+    @Deprecated
+    @Nullable public static ItemStack deserializeItemStack(String base64Str) {
+        if (base64Str == null || base64Str.isBlank()) {
             return null;
         }
+
+        var encodedData = base64Str.getBytes(StandardCharsets.US_ASCII);
+        var decodedData = Base64.getMimeDecoder().decode(base64Str);
+        return deserializeItemStack(ItemStackDataCodec.isCurrent(decodedData) ? decodedData : encodedData);
+    }
+
+    public static boolean isLegacyItemStack(byte[] serializedItemStack) {
+        return serializedItemStack != null
+                && serializedItemStack.length > 0
+                && ItemStackDataCodec.isLegacy(serializedItemStack);
     }
 
     public static String blockDataBase64(String text) {

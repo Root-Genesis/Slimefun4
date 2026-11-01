@@ -110,12 +110,12 @@ public class ExplosiveTool extends SimpleSlimefunItem<ToolUseHandler> implements
         ExplosiveToolBreakBlocksEvent event = new ExplosiveToolBreakBlocksEvent(p, b, blocksToDestroy, item, this);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
-    /*
-     * Fix: https://github.com/SlimefunGuguProject/Slimefun4/issues/853
-     *
-     * To address the issue we sort the list so that player heads are processed first.
-     * See breakBlock for the detailed handling logic.
-     */
+        /*
+         * Fix: https://github.com/SlimefunGuguProject/Slimefun4/issues/853
+         *
+         * To address the issue we sort the list so that player heads are processed first.
+         * See breakBlock for the detailed handling logic.
+         */
         if (Bukkit.getPluginManager().isPluginEnabled("ExoticGarden")) {
             blocksToDestroy.sort((block1, block2) -> Boolean.compare(
                     block2.getType().equals(Material.PLAYER_HEAD),
@@ -174,7 +174,7 @@ public class ExplosiveTool extends SimpleSlimefunItem<ToolUseHandler> implements
         block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, material);
         Location blockLocation = block.getLocation();
 
-        Optional<SlimefunItem> blockItem = Optional.ofNullable(StorageCacheUtils.getSfItem(blockLocation));
+        Optional<SlimefunItem> blockItem = Optional.ofNullable(StorageCacheUtils.getSlimefunItem(blockLocation));
 
         AtomicBoolean isUseVanillaBlockBreaking = new AtomicBoolean(true);
 
@@ -200,7 +200,7 @@ public class ExplosiveTool extends SimpleSlimefunItem<ToolUseHandler> implements
 
                         if (Tag.LEAVES.isTagged(leaveBlockType)) {
                             Optional<SlimefunItem> optionalLeavesBlockSfItem =
-                                    Optional.ofNullable(StorageCacheUtils.getSfItem(leavesLocation));
+                                    Optional.ofNullable(StorageCacheUtils.getSlimefunItem(leavesLocation));
 
                             optionalLeavesBlockSfItem.ifPresent(leavesSfItem -> {
                                 Collection<ItemStack> sfItemDrops = sfItem.getDrops();

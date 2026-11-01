@@ -110,9 +110,7 @@ public class DebugFishListener implements Listener {
         }
 
         if (StorageCacheUtils.hasSlimefunBlock(b.getLocation())) {
-            var data = StorageCacheUtils.hasBlock(b.getLocation())
-                    ? StorageCacheUtils.getBlock(b.getLocation())
-                    : StorageCacheUtils.getUniversalBlock(b);
+            var data = StorageCacheUtils.getDataContainer(b.getLocation());
 
             try {
                 if (data == null) {
@@ -120,8 +118,10 @@ public class DebugFishListener implements Listener {
                             .getUniversalDataUUID(b)
                             .ifPresentOrElse(
                                     (uuid) -> {
-                    p.sendMessage(ChatColors.color(
-                        "&cDetected a corrupted universal data item. UUID: " + uuid + ". Please check whether the corresponding record exists in the database!"));
+                                        p.sendMessage(
+                                                ChatColors.color(
+                                                        "&cDetected a corrupted universal data item. UUID: " + uuid
+                                                                + ". Please check whether the corresponding record exists in the database!"));
                                         sendVanillaInfo(p, b);
                                     },
                                     () -> sendVanillaInfo(p, b)));

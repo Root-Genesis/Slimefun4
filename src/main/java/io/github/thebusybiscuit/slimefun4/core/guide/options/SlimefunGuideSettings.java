@@ -120,40 +120,40 @@ public final class SlimefunGuideSettings {
 
         // @formatter:off
         menu.addItem(
-            4,
-            new CustomItemStack(
-                Material.WRITABLE_BOOK,
-                ChatColor.GREEN + locale.getMessage(p, "guide.title.versions"),
-                "&7&o" + locale.getMessage(p, "guide.tooltips.versions-notice"),
-                "",
-                "&fTranslated by SaanPrasanna",
-                "&cPlease do not screenshot this version info to Discord/Github for bug reports",
-                "&cReport issues on the English localization page first",
-                "",
-                "&cTHIS BUILD IS UNOFFICIAL, DO NOT REPORT TO SLIMEFUN DEV",
-                "",
-                "&fMinecraft: &a" + Bukkit.getBukkitVersion(),
-                "&fSlimefun: &a" + Slimefun.getVersion()),
-            ChestMenuUtils.getEmptyClickHandler());
+                4,
+                new CustomItemStack(
+                        Material.WRITABLE_BOOK,
+                        ChatColor.GREEN + locale.getMessage(p, "guide.title.versions"),
+                        "&7&o" + locale.getMessage(p, "guide.tooltips.versions-notice"),
+                        "",
+                        "&fTranslated by SaanPrasanna",
+                        "&cPlease do not screenshot this version info to Discord/Github for bug reports",
+                        "&cReport issues on the English localization page first",
+                        "",
+                        "&cTHIS BUILD IS UNOFFICIAL, DO NOT REPORT TO SLIMEFUN DEV",
+                        "",
+                        "&fMinecraft: &a" + Bukkit.getBukkitVersion(),
+                        "&fSlimefun: &a" + Slimefun.getVersion()),
+                ChestMenuUtils.getEmptyClickHandler());
         // @formatter:on
 
         // @formatter:off
         menu.addItem(
-            6,
-            new CustomItemStack(
-                Material.COMPARATOR,
-                "&e" + locale.getMessage(p, "guide.title.source"),
-                "",
-                "&7Last activity: &a" + NumberUtils.getElapsedTime(github.getLastUpdate()) + " ago",
-                "&7Forks: &e" + github.getForks(),
-                "&7Stars: &e" + github.getStars(),
-                "",
-                "&7&oSlimefun 4 is a community-driven project,",
-                "&7&oyou can find the source code on GitHub",
-                "&7&oIf you want to help this project continue,",
-                "&7&oyou can consider contributing to the project",
-                "",
-                "&7\u21E8 &eClick to visit the Chinese GitHub repository"));
+                6,
+                new CustomItemStack(
+                        Material.COMPARATOR,
+                        "&e" + locale.getMessage(p, "guide.title.source"),
+                        "",
+                        "&7Last activity: &a" + NumberUtils.getElapsedTime(github.getLastUpdate()) + " ago",
+                        "&7Forks: &e" + github.getForks(),
+                        "&7Stars: &e" + github.getStars(),
+                        "",
+                        "&7&oSlimefun 4 is a community-driven project,",
+                        "&7&oyou can find the source code on GitHub",
+                        "&7&oIf you want to help this project continue,",
+                        "&7&oyou can consider contributing to the project",
+                        "",
+                        "&7\u21E8 &eClick to visit the Chinese GitHub repository"));
         // @formatter:on
 
         menu.addMenuClickHandler(6, (pl, slot, item, action) -> {
@@ -164,17 +164,17 @@ public final class SlimefunGuideSettings {
 
         // @formatter:off
         menu.addItem(
-            8,
-            new CustomItemStack(
-                Material.KNOWLEDGE_BOOK,
-                "&3" + locale.getMessage(p, "guide.title.wiki"),
-                "",
-                "&7Need help with items or machines?",
-                "&7Not sure what to do?",
-                "&7Check out our community-maintained wiki",
-                "&7and consider becoming an editor!",
-                "",
-                "&7\u21E8 &eClick to visit the unofficial Chinese Wiki"));
+                8,
+                new CustomItemStack(
+                        Material.KNOWLEDGE_BOOK,
+                        "&3" + locale.getMessage(p, "guide.title.wiki"),
+                        "",
+                        "&7Need help with items or machines?",
+                        "&7Not sure what to do?",
+                        "&7Check out our community-maintained wiki",
+                        "&7and consider becoming an editor!",
+                        "",
+                        "&7\u21E8 &eClick to visit the unofficial Chinese Wiki"));
         // @formatter:on
 
         menu.addMenuClickHandler(8, (pl, slot, item, action) -> {
@@ -185,18 +185,19 @@ public final class SlimefunGuideSettings {
 
         // @formatter:off
         menu.addItem(
-            47,
-            new CustomItemStack(
-                Material.BOOKSHELF,
-                "&3" + locale.getMessage(p, "guide.title.addons"),
-                "",
-                "&7Slimefun is a large project, but addon plugins",
-                "&7are what truly make Slimefun shine",
-                "&7Take a look at them, maybe the addon you are looking for is there!",
-                "",
-                "&7Addons installed on this server: &b" + Slimefun.getInstalledAddons().size(),
-                "",
-                "&7\u21E8 &eClick to view available Slimefun4 addons"));
+                47,
+                new CustomItemStack(
+                        Material.BOOKSHELF,
+                        "&3" + locale.getMessage(p, "guide.title.addons"),
+                        "",
+                        "&7Slimefun is a large project, but addon plugins",
+                        "&7are what truly make Slimefun shine",
+                        "&7Take a look at them, maybe the addon you are looking for is there!",
+                        "",
+                        "&7Addons installed on this server: &b"
+                                + Slimefun.getInstalledAddons().size(),
+                        "",
+                        "&7\u21E8 &eClick to view available Slimefun4 addons"));
         // @formatter:on
 
         menu.addMenuClickHandler(47, (pl, slot, item, action) -> {

@@ -7,11 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,9 +20,6 @@ import org.bukkit.inventory.ItemStack;
 public class SlimefunUniversalData extends ASlimefunDataContainer {
     @Setter
     private volatile UniversalMenu menu;
-
-    @Setter
-    private volatile boolean pendingRemove = false;
 
     private final Set<UniversalDataTrait> traits = new HashSet<>();
 
@@ -38,16 +35,18 @@ public class SlimefunUniversalData extends ASlimefunDataContainer {
     }
 
     @ParametersAreNonnullByDefault
+    @SneakyThrows
     public void setData(String key, String val) {
-        checkData();
-
         if (UniversalDataTrait.isReservedKey(key)) {
-            Slimefun.logger()
-                    .log(Level.WARNING, "Warning: An addon attempted to modify protected block data. The change was cancelled.");
-            return;
+            throw new IllegalAccessException("Cannot modify protected block data keys");
         }
 
-        setCacheInternal(key, val, true);
+        super.setData(key, val);
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void scheduleUpdateData(String key) {
         Slimefun.getDatabaseManager().getBlockDataController().scheduleDelayedUniversalDataUpdate(this, key);
     }
 
@@ -61,13 +60,6 @@ public class SlimefunUniversalData extends ASlimefunDataContainer {
             Slimefun.getDatabaseManager()
                     .getBlockDataController()
                     .scheduleDelayedUniversalDataUpdate(this, trait.getReservedKey());
-        }
-    }
-
-    @ParametersAreNonnullByDefault
-    public void removeData(String key) {
-        if (removeCacheInternal(key) != null || !isDataLoaded()) {
-            Slimefun.getDatabaseManager().getBlockDataController().scheduleDelayedUniversalDataUpdate(this, key);
         }
     }
 
@@ -103,6 +95,6 @@ public class SlimefunUniversalData extends ASlimefunDataContainer {
     @Override
     public String toString() {
         return "SlimefunUniversalData [uuid= " + getUUID() + ", sfId=" + getSfId() + ", isPendingRemove="
-                + pendingRemove + "]";
+                + isPendingRemove() + "]";
     }
 }
