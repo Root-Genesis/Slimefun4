@@ -24,7 +24,7 @@ This project **strictly enforces** the [Conventional Commits](https://www.conven
 
 If your code fixes an issue, explicitly state it in the commit body (not just the title).
 
-> e.g., `resolves #114514` or `fix #114514`
+> e.g., `resolves #123` or `fix #123`
 
 If the fix is obvious and described in the title, duplication is not necessary.
 
@@ -42,6 +42,10 @@ We use **Spotless** as our formatting tool. Before submitting, you **must** run 
 
 # Contribution Types
 
-You can submit bug fixes, new content, or API improvements.
+This fork mainly needs **translation fixes**: wrong, unclear or missing English text in messages, menus, item lore and console output. Bug fixes are welcome too.
 
-The fork currently supports API-related contributions, and developers can depend on this English fork via JitPack.
+New features, larger code changes and API changes are best sent to [SlimefunGuguProject](https://github.com/SlimefunGuguProject/Slimefun4) first, so the Chinese and English builds stay the same. They reach this fork with the next upstream sync. Addon developers should build against the upstream API (see the README).
+
+# License
+
+By submitting a contribution, you agree that it is licensed under the [GNU General Public License v3.0](LICENSE), the same license as the rest of the project. Only submit work you wrote yourself or have the right to share under that license. Keep existing copyright notices and `@author` tags as they are.

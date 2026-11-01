@@ -1,95 +1,94 @@
-# Slimefun 4
+# Slimefun 4 (English fork)
 
-Looking for the Original Chinese Version? [**Click here**](https://github.com/SlimefunGuguProject/Slimefun4/)
+An English translation of the [SlimefunGuguProject](https://github.com/SlimefunGuguProject/Slimefun4) fork of [Slimefun 4](https://github.com/Slimefun/Slimefun4), maintained by [@SaanPrasanna](https://github.com/SaanPrasanna).
 
-Want to download directly? [**Click here**](https://github.com/SaanPrasanna/Slimefun4/releases)
-
-This is an English translation fork maintained by @SaanPrasanna
-
-Download [SlimeGlue](https://github.com/Xzavier0722/SlimeGlue/) to ensure compatibility between Slimefun and other protection plugins
-
-### About This Fork
-
-This is an English translation of the Slimefun 4 Chinese fork, maintained by @SaanPrasanna.
-
-For the original Chinese version and subscription plans, visit: [GuguProject Builds](https://resources.guizhanss.com/tools/slimefun-insider)
-
-![Current Version](https://img.shields.io/github/v/release/SaanPrasanna/Slimefun4?include_prereleases)
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+[![Latest release](https://img.shields.io/github/v/release/SaanPrasanna/Slimefun4)](https://github.com/SaanPrasanna/Slimefun4/releases/latest)
 [![Issues](https://img.shields.io/github/issues/SaanPrasanna/Slimefun4.svg?style=popout)](https://github.com/SaanPrasanna/Slimefun4/issues)
-![Downloads](https://img.shields.io/github/downloads/SaanPrasanna/Slimefun4/total)
+[![Downloads](https://img.shields.io/github/downloads/SaanPrasanna/Slimefun4/total)](https://github.com/SaanPrasanna/Slimefun4/releases)
+[![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 
-**Note:** This is an English translation fork. Please report issues specific to this fork here. For original Slimefun issues, use the [official issue tracker](https://github.com/Slimefun/Slimefun4/issues).
+**[Download the latest release](https://github.com/SaanPrasanna/Slimefun4/releases/latest)** · [Changelog](CHANGELOG.md) · [Report a bug](https://github.com/SaanPrasanna/Slimefun4/issues) · [Original Chinese version](https://github.com/SlimefunGuguProject/Slimefun4)
+
+> [!IMPORTANT]
+> This is an **unofficial, modified build**. It isn't made, endorsed or supported by the Slimefun team or by SlimefunGuguProject.
+> Please report problems with this build **here**, not to either upstream project. If a bug turns out to come from upstream, it will be passed on to them.
+
+## About this fork
+
+SlimefunGuguProject maintains a Chinese fork of Slimefun 4 with its own features and fixes, such as database storage and newer Minecraft support. This fork keeps all of that and translates it into English:
+
+- Messages, menus, item lore and console output are in English, and English is the default language.
+- New upstream updates are synced regularly and translated before each release. See the [changelog](CHANGELOG.md).
+- Game behaviour isn't changed on purpose. Fixes made here are listed in the changelog.
+
+Download [SlimeGlue](https://github.com/Xzavier0722/SlimeGlue/) for compatibility between Slimefun and protection plugins.
+
+## What is Slimefun?
 
 Slimefun is a plugin that aims to provide a modding-like experience. It offers everything you can imagine, from jetpacks to magic altars!
 
-Slimefun allows every player to decide whether to develop in magic or technology.
-From wands to nuclear reactors, we have it all.
-In addition, we also have magic altars, energy networks, and even item transportation systems.
+Slimefun lets every player decide whether to develop in magic or technology.
+From wands to nuclear reactors, it has it all.
+There are also magic altars, energy networks, and even item transportation systems.
 
-This project started in 2013 and is still evolving today.
-It has grown from a small independent plugin to a community with thousands of participants and hundreds of contributors.
-Currently, Slimefun has added more than **500 new items/crafting recipes**
-([Learn about the history of Slimefun](https://github.com/Slimefun/Slimefun4/wiki/Slimefun-in-a-nutshell)).
+The project started in 2013 and is still evolving today.
+It has grown from a small independent plugin into a community with thousands of participants and hundreds of contributors.
+Slimefun adds more than **500 new items and crafting recipes**
+([learn about the history of Slimefun](https://github.com/Slimefun/Slimefun4/wiki/Slimefun-in-a-nutshell)).
 
-At the same time, Slimefun also has a wide variety of addon plugins to choose from!<br>
-Check out the [Addon List](https://github.com/Slimefun/Slimefun4/wiki/Addons) to find the addons you want!
+Slimefun also has a wide variety of addons. Check out the [Addon List](https://github.com/Slimefun/Slimefun4/wiki/Addons) to find the ones you want.
 
-### Navigation
+## :floppy_disk: Download and install
 
-* **[Download Slimefun 4](#floppy_disk-downloading-slimefun-4)**
-* **[Discord Server](#discord)**
-* **[Bug Reports](https://github.com/SaanPrasanna/Slimefun4/issues)**
-* **[Official Wiki](https://github.com/Slimefun/Slimefun4/wiki)**
-* **[FAQ](https://github.com/Slimefun/Slimefun4/wiki/FAQ)**
-
-## :floppy_disk: Downloading Slimefun 4
-
+Download the jar from the [Releases page](https://github.com/SaanPrasanna/Slimefun4/releases/latest) and put it in your server's `plugins/` folder.
 (See also: [How to install Slimefun](https://github.com/Slimefun/Slimefun4/wiki/Installing-Slimefun))
 
-This English fork of Slimefun 4 can be downloaded from the [Releases page](https://github.com/SaanPrasanna/Slimefun4/releases).
+| | This English fork |
+|---|---|
+| **Server software** | Paper, or a fork of Paper such as Purpur or Leaves (recommended). CraftBukkit isn't supported. |
+| **Minecraft version** | 1.18.x – 26.3.x |
+| **Java version** | Java 21 or newer |
+| **Updates** | Manual: download new versions from the Releases page. Each release lists its changes in the [changelog](CHANGELOG.md). |
 
-For the original Chinese version with auto-updates, visit [Guizhan Resources](https://resources.guizhanss.com/plugin/Slimefun4).
+Builds from this fork **don't update themselves**. The plugin's built-in updater only downloads the Chinese upstream builds, so it is switched off for these builds. That way your server never replaces the English jar with a Chinese one.
 
-Here are the differences between the two types of versions:
+**Before updating, back up `plugins/Slimefun/`** (and your MySQL/PostgreSQL database, if you use one). Some updates convert stored data.
 
-|                      | Development Builds (Latest Updates)                                                       | "Stable" Builds                                                                            |
-|----------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
-| **Minecraft Version** | :video_game: 1.18.X - 26.3.X                                                              | :video_game: 1.18.X - 26.2.X                                                               |
-| **Java Version**      | :computer: **Java 21+**                                                                   | :computer: **Java 21+**                                                                    |
-| **Auto-Updates**      | :heavy_check_mark:                                                                        | :heavy_check_mark:                                                                         |
-| **Frequent Updates**  | :heavy_check_mark:                                                                        | :x:                                                                                        |
-| **Latest Content**    | :heavy_check_mark:                                                                        | :x:                                                                                        |
-| **Bug Reports**       | :heavy_check_mark:                                                                        | :x:                                                                                        |
-| **Download Link**     | :package: **[Download Dev](https://github.com/SaanPrasanna/Slimefun4/releases/latest)** | :package: **[Download Stable](https://github.com/SaanPrasanna/Slimefun4/releases)** |
+Hybrid servers that run plugins and mods together (Arclight, CatServer and similar) aren't supported.
 
+## :computer: Building from source
 
-**Note: The supported Minecraft versions listed above do not represent the full range of available versions. They may refer to certain historical versions. The version markings are for reference only.**
+You need [Git](https://git-scm.com/) and Java 21.
 
-**! It is recommended to use the latest development builds to get the latest content updates and bug fixes!**
+```bash
+git clone https://github.com/SaanPrasanna/Slimefun4.git --depth=1
+cd Slimefun4
+```
 
-## :computer: (Development) Adding as a Dependency
+- On Windows: `.\gradlew.bat build`
+- On Linux and macOS: `./gradlew build`
+
+The plugin jar is written to `build/libs/`.
+
+## :jigsaw: Developing addons
+
+This fork only changes text and fixes bugs. The API is the same as upstream's. Build your addon against the upstream SlimefunGuguProject artifact, and it will work with both the Chinese and the English builds.
 
 <details>
+<summary>How to add Slimefun 4 as a dependency (upstream artifacts)</summary>
 
-<summary>How to add Slimefun 4 as a dependency</summary>
+Repository, Maven:
 
-First add our repository:
-
-Maven:
-
-Release version:
 ```xml
+<!-- Releases -->
 <repository>
     <id>gugu-maven-repo</id>
     <url>https://maven.norain.city/releases</url>
 </repository>
-```
 
-Development version (Slimefun Insider / DEV branch):
-```xml
+<!-- Development builds (Slimefun Insider / dev branch) -->
 <repository>
-    <id>gugu-maven-repo</id>
+    <id>gugu-maven-repo-snapshots</id>
     <url>https://maven.norain.city/snapshots</url>
     <snapshots>
         <enabled>true</enabled>
@@ -97,29 +96,17 @@ Development version (Slimefun Insider / DEV branch):
 </repository>
 ```
 
-Gradle: Add the following to your `build.gradle.kts`:
+Repository, Gradle (`build.gradle.kts`):
 
-Release version:
 ```kotlin
 repositories {
-    maven {
-        url = uri("https://maven.norain.city/releases")
-    }
+    maven { url = uri("https://maven.norain.city/releases") }
+    // Development builds:
+    maven { url = uri("https://maven.norain.city/snapshots") }
 }
 ```
 
-Development version (Slimefun Insider / DEV branch):
-```kotlin
-repositories {
-    maven {
-        url = uri("https://maven.norain.city/snapshots")
-    }
-}
-```
-
-Then add Slimefun 4 as a dependency:
-
-Maven:
+Dependency, Maven:
 
 ```xml
 <dependency>
@@ -130,37 +117,21 @@ Maven:
 </dependency>
 ```
 
-Gradle:
+Dependency, Gradle:
 
 ```kotlin
 dependencies {
     compileOnly("com.github.SlimefunGuguProject:Slimefun4:DEV-SNAPSHOT")
 }
 ```
+
+These repositories and artifacts are run by SlimefunGuguProject, not by this fork.
+
 </details>
-
-
-## :computer: Compiling Slimefun
-
-To compile Slimefun4, you must first install [Git](https://git-scm.com/)
-
-Open a terminal or command prompt in the location where you want to store the code and run the following command:
-
-```bash
-git clone https://github.com/SaanPrasanna/Slimefun4.git --depth=1
-```
-This will pull Slimefun's code to your local machine.
-
-Finally, open the `Slimefun4` folder, and open a terminal or command prompt in that folder and enter the following command to compile:
-- If you are on Windows: `.\gradlew.bat build`
-- If you are on a Unix-like system: `./gradlew build`
-
-After compilation is complete, you can find the compiled plugin file in the `Slimefun4/build/libs` folder.
 
 ## :framed_picture: Screenshots
 
-So, what does Slimefun look like?<br>
-We asked some people from our [Discord server](#discord) to send us some screenshots:
+Screenshots from the official [Slimefun Wiki](https://github.com/Slimefun/Wiki), taken by members of the Slimefun community:
 
 | Reactors and Energy | Amazing Automation Factory | Magic Laboratory |
 | :-------------------------------------------: | :--------------------------------------: | :----------------------------------------: |
@@ -169,122 +140,109 @@ We asked some people from our [Discord server](#discord) to send us some screens
 | ![](https://raw.githubusercontent.com/Slimefun/Slimefun-Wiki/master/images/showcase4.png) | ![](https://raw.githubusercontent.com/Slimefun/Slimefun-Wiki/master/images/showcase3.png) | ![](https://raw.githubusercontent.com/Slimefun/Slimefun-Wiki/master/images/showcase2.png) |
 | *Screenshot by GalaxyKat11#3816* | *Screenshot by TamThan#7987* | *Screenshot by Kilaruna#4981* |
 
-## :headphones: Community
+## :open_book: Wiki and help
 
-### Community Channels
+- **This fork:** [Issues](https://github.com/SaanPrasanna/Slimefun4/issues) for bugs, translation mistakes and questions about this build.
+- **Official Slimefun Wiki:** https://github.com/Slimefun/Slimefun4/wiki ([FAQ](https://github.com/Slimefun/Slimefun4/wiki/FAQ), [Common Issues](https://github.com/Slimefun/Slimefun4/wiki/Common-Issues), [Addon Developer Guide](https://github.com/Slimefun/Slimefun4/wiki/Developer-Guide)). Most of it applies here too. Features that only exist in the Chinese fork, such as database storage, aren't covered.
+- **Chinese Wiki** (maintained by [@ybw0014](https://github.com/ybw0014)): https://slimefun-wiki.guizhanss.cn/. It covers the Chinese fork's own features.
 
-**English Fork Maintainer:** @SaanPrasanna
+Community spaces run by others:
 
-For Chinese community:
-- QQ Group: 807302496 (Slimefun Chinese Version)
-- Addon Discussion QQ Group: 205679802 (Slimefun Addon Discussion and translation group plugin update notifications)
+- The official [Slimefun Discord](https://discord.gg/slimefun) is for the original Slimefun. Please don't ask there for help with this build, and follow its [rules](https://github.com/Slimefun/Slimefun4/wiki/Discord-Rules).
+- The SlimefunGugu community (Chinese): QQ group 807302496, addon QQ group 205679802, and [KOOK](https://kook.top/oqZwh8).
 
-### KOOK Channel
+## :handshake: Contributing
 
-Welcome to join the KOOK [Slimefun Simplified Chinese Community](https://kook.top/oqZwh8) server
+Pull requests are welcome, especially translation fixes. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Code changes that aren't about translation are best sent to [SlimefunGuguProject](https://github.com/SlimefunGuguProject/Slimefun4) first, so every user benefits. They reach this fork with the next sync.
 
-### Official Discord
+By contributing, you agree that your contribution is licensed under the GNU GPLv3, the same as the rest of the project.
 
-You can find Slimefun's community server on Discord and communicate with **over 7000** users from around the world.
-Click the image below to join the Discord server to report issues, make suggestions, or discuss the plugin.
-The official Slimefun community often holds community events, join to learn more.
-**Note**: The official Slimefun Discord server does **not** accept any form of issue reports. Please use the [issue tracker](https://github.com/Slimefun/Slimefun4/issues) to report issues!
+## :shield: Privacy and network use
 
-Please familiarize yourself with the [important rules](https://github.com/Slimefun/Slimefun4/wiki/Discord-Rules) of the official Discord server before joining.
-People who do not follow the above rules may be kicked or even banned from the server.
-
-<p align="center">
-  <a href="https://discord.gg/slimefun">
-    <img src="https://discordapp.com/api/guilds/565557184348422174/widget.png?style=banner3" alt="Discord Invite"/>
-  </a>
-</p>
-
-## :open_book: Wiki
-
-Slimefun has a (detailed and frequently maintained - *ahem*) Wiki for new players,
-and you can also consider contributing to the Wiki.
-
-Official Wiki: https://github.com/Slimefun/Slimefun4/wiki
-Unofficial Chinese Wiki: https://slimefun-wiki.guizhanss.cn/
-
-#### :star: Useful Documentation
-
-* [What is Slimefun?](https://github.com/Slimefun/Slimefun4/wiki/Slimefun-in-a-nutshell)
-* [How to install Slimefun](https://github.com/Slimefun/Slimefun4/wiki/Installing-Slimefun)
-* [Slimefun 4 Addon List](https://github.com/Slimefun/Slimefun4/wiki/Addons)
-* [Slimefun 4 Addon Development Guide](https://github.com/Slimefun/Slimefun4/wiki/Developer-Guide)
-* [Getting Started](https://github.com/Slimefun/Slimefun4/wiki/Getting-Started)
-* [FAQ](https://github.com/Slimefun/Slimefun4/wiki/FAQ)
-* [Common Issues](https://github.com/Slimefun/Slimefun4/wiki/Common-Issues)
-* [Help us expand the Wiki!](https://github.com/Slimefun/Slimefun4/wiki/Expanding-the-Wiki)
-* [Help us translate Slimefun!](https://github.com/Slimefun/Slimefun4/wiki/Translating-Slimefun)
-
-The Chinese Wiki is maintained by @ybw0014. If you find missing articles, please report them on the Wiki's Issues page.
-
-## :handshake: Contributing to the Project
-
-Slimefun 4 is an open-source project licensed under the [GNU GPLv3](https://github.com/Slimefun/Slimefun4/blob/master/LICENSE).
-Over 100 people have contributed to this project, and they are amazing.
-We encourage you to contribute to Slimefun 4 by submitting PRs. Your contributions keep us alive <3.
-
-## :exclamation: Disclaimer
-
-Slimefun4 uses multiple systems to collect plugin usage data and has auto-update functionality to push new versions to you.
-The plugin does not collect personal information stored in any form. The types of information collected can be seen below.
-
-Of course, you can disable data telemetry and auto-updates at any time.
+The plugin connects to these services. It doesn't collect personal information such as player names, IP addresses or chat.
 
 <details>
-  <summary>Auto-Updates</summary>
+<summary>bStats (anonymous usage statistics): on by default</summary>
 
-The English fork of Slimefun uses GitHub API to check for and download updates.
-Auto-updates are enabled by default, but you can choose to disable them in `/plugins/Slimefun/config.yml`.
-We strongly recommend keeping auto-updates enabled to ensure you get the latest features/fixes.
+On first start, Slimefun downloads its metrics module from [Slimefun/MetricsModule2](https://github.com/Slimefun/MetricsModule2) on GitHub and runs it. The module sends anonymous statistics about the server and the plugin to [bStats](https://bstats.org/plugin/bukkit/Slimefun/4574), where they appear on the original Slimefun project's public statistics page.
 
-The original Chinese version uses Github API + GuizhanBuild API for updates.
+To turn it off, set `enabled: false` in `plugins/bStats/config.yml`. See the [bStats privacy policy](https://bstats.org/privacy-policy).
 
 </details>
 
 <details>
-  <summary>Anonymous Server Data</summary>
+<summary>GitHub and Minecraft skins (for the in-game credits)</summary>
 
-Slimefun4 uses [bStats](https://bstats.org/plugin/bukkit/Slimefun/4574) to collect anonymous information about the plugin because we are interested in how server players use the plugin.
-However, all data published on bStats is anonymous, and we absolutely cannot trace back to specific servers or players based on the reported data.
-All collected data is publicly accessible: https://bstats.org/plugin/bukkit/Slimefun/4574
-
-You can also disable data collection in `/plugins/bStats/config.yml`.
-Learn more by checking out [bStats Privacy Policy](https://bstats.org/privacy-policy).
+To show contributors in the Slimefun Guide, the plugin reads public data from the [GitHub API](https://api.github.com/): contributor usernames and commit counts, open issues, pull requests, stars, forks and the date of the last commit. It reads these from `SlimefunGuguProject/Slimefun4`, `Slimefun/Wiki` and `Slimefun/Resourcepack`. It loads the contributors' Minecraft skins from Mojang's servers. Nothing about your server is sent.
 
 </details>
 
 <details>
-  <summary>GitHub Data</summary>
+<summary>Updates and analytics: off in these builds</summary>
 
-Slimefun4 uses the [GitHub API](https://api.github.com/) to collect usage data about this open-source project.
-Rest assured, your Minecraft server information will not be sent to GitHub.
-
-This information includes but is not limited to:
-
-* List of collaborators, their usernames and profile links (from repositories `Slimefun/Slimefun4`, `Slimefun/Slimefun-Wiki`, and `Slimefun/Resourcepack`)
-* Number of open issues in the repository
-* Number of pending pull requests in the repository
-* Number of stars in the repository
-* Number of forks of the repository
-* Code size of the repository
-* Date of the last commit in the repository
+- **Auto-update:** The built-in updater only works for the official Chinese builds, so it does nothing in this fork, whatever `options.auto-update` says in `config.yml`.
+- **Slimefun analytics** (`analytics.slimefun.dev`): only sent by official Slimefun builds, never by this one.
 
 </details>
 
-Additionally, the plugin also uses [textures.minecraft.net](https://www.minecraft.net/en-us) to obtain collaborators' Minecraft skins.
-Please note: Slimefun is not affiliated with `Mojang Studios` or Minecraft.
+## :scroll: License and credits
 
----
+### License
 
-## Credits
+Slimefun 4, the SlimefunGuguProject fork and this English fork are free software, licensed under the **[GNU General Public License v3.0](LICENSE)**. You may use, share and modify them. If you distribute a modified version, it has to stay under the GPLv3, keep these copyright notices, and come with its source code.
 
-**English Translation Fork maintained by:** @SaanPrasanna
+**This is a modified version.** It is based on [SlimefunGuguProject/Slimefun4](https://github.com/SlimefunGuguProject/Slimefun4), which is itself based on [Slimefun/Slimefun4](https://github.com/Slimefun/Slimefun4). Since November 2025 it has been translated into English and changed as described in the [changelog](CHANGELOG.md). The git history records every change. The source code for every release is available from its tag on the [Releases page](https://github.com/SaanPrasanna/Slimefun4/releases).
 
-**Original Chinese Translation:** SlimefunGuguProject
-**Original Slimefun:** TheBusyBiscuit and contributors
+The [`NOTICE`](NOTICE) file holds this attribution and is packaged inside every plugin jar, next to the license text (`META-INF/NOTICE-Slimefun.txt` and `META-INF/LICENSE-Slimefun.txt`). If you redistribute this plugin or build on it, keep both files and the credits below.
 
-This is a fork focused on providing an English translation of the Chinese Slimefun fork while preserving all the features and functionality.
+```
+Slimefun 4
+Copyright (C) 2013-2026 TheBusyBiscuit and the Slimefun contributors
+Copyright (C) SlimefunGuguProject and its contributors (Chinese fork)
+Copyright (C) 2025-2026 Sandun Prasanna (English translation and modifications)
+
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software Foundation,
+either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+```
+
+### Credits
+
+This fork exists thanks to the people who built Slimefun:
+
+- **Slimefun:** created by [TheBusyBiscuit](https://github.com/TheBusyBiscuit) in 2013 and maintained by the [Slimefun team](https://github.com/Slimefun), including [WalshyDev](https://github.com/WalshyDev) and [LinoxGH](https://github.com/LinoxGH), with [hundreds of contributors](https://github.com/Slimefun/Slimefun4/graphs/contributors).
+- **SlimefunGuguProject (Chinese fork):** maintained by [StarWishsama](https://github.com/StarWishsama), with [Xzavier0722](https://github.com/Xzavier0722) (database storage and SlimeGlue), [ybw0014](https://github.com/ybw0014) (updater, GuizhanLib and the Chinese Wiki) and [all their contributors](https://github.com/SlimefunGuguProject/Slimefun4/graphs/contributors).
+- **English translation fork:** [Sandun Prasanna (@SaanPrasanna)](https://github.com/SaanPrasanna).
+- **Translations into other languages:** the Slimefun translators listed in [`translators.json`](src/main/resources/languages/translators.json).
+- **Screenshots:** the community members credited under each image above.
+
+The Slimefun Guide in game also lists upstream contributors under **Settings & Info → Slimefun4 Contributors**.
+
+### Third-party libraries
+
+The plugin jar bundles these libraries, each under its own license:
+
+| Library | License |
+|---|---|
+| [dough](https://github.com/Slimefun/dough) | MIT |
+| [Unirest for Java](https://github.com/Kong/unirest-java) | MIT |
+| [HikariCP](https://github.com/brettwooldridge/HikariCP) | Apache-2.0 |
+| [PostgreSQL JDBC Driver](https://github.com/pgjdbc/pgjdbc) | BSD-2-Clause |
+| [Apache Commons Lang](https://github.com/apache/commons-lang) | Apache-2.0 |
+| [GuizhanLib](https://github.com/ybw0014/guizhanlib) | GPL-3.0 |
+| [SlimefunCompLib](https://github.com/Xzavier0722/SlimefunCompLib) | No license file published. Bundled as in the upstream build, by an upstream contributor. |
+
+### Trademarks
+
+"Slimefun" refers to the original project by TheBusyBiscuit and the Slimefun team. This fork uses the name only to say what it is based on, and doesn't claim to be the official version.
+Minecraft is a trademark of Mojang Studios / Microsoft. This project isn't affiliated with or endorsed by Mojang Studios or Microsoft.
+This fork is free. It isn't connected to the paid subscription offered by SlimefunGuguProject for its Chinese builds.
+
+### No warranty
+
+This plugin is provided "as is", without warranty of any kind, as described in sections 15 and 16 of the GPLv3. Back up your server before installing or updating.
