@@ -153,7 +153,7 @@ public final class SlimefunGuideSettings {
                         "&7&oIf you want to help this project continue,",
                         "&7&oyou can consider contributing to the project",
                         "",
-                        "&7\u21E8 &eClick to visit the Chinese GitHub repository"));
+                        "&7\u21E8 &eClick to view the source code on GitHub"));
         // @formatter:on
 
         menu.addMenuClickHandler(6, (pl, slot, item, action) -> {

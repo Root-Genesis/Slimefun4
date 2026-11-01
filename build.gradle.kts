@@ -140,6 +140,15 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("Slimefun")
     archiveVersion.set(project.version.toString())
     archiveClassifier.set("")
+    // Ship the GPLv3 license text and attribution notice inside the plugin jar
+    from(rootProject.file("LICENSE")) {
+        into("META-INF")
+        rename { "LICENSE-Slimefun.txt" }
+    }
+    from(rootProject.file("NOTICE")) {
+        into("META-INF")
+        rename { "NOTICE-Slimefun.txt" }
+    }
     relocate("io.github.bakedlibs.dough", "io.github.thebusybiscuit.slimefun4.libraries.dough")
     relocate("io.papermc.lib", "io.github.thebusybiscuit.slimefun4.libraries.paperlib")
     relocate("kong.unirest", "io.github.thebusybiscuit.slimefun4.libraries.unirest")

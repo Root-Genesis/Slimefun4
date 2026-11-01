@@ -1,0 +1,47 @@
+Slimefun 4 (English fork)
+https://github.com/SaanPrasanna/Slimefun4
+
+This is a MODIFIED VERSION of Slimefun 4. It is not the official Slimefun and is not
+made, endorsed or supported by the Slimefun team or by SlimefunGuguProject.
+
+Based on:
+  SlimefunGuguProject/Slimefun4 (Chinese fork)
+    https://github.com/SlimefunGuguProject/Slimefun4
+  which is based on Slimefun/Slimefun4 (original Slimefun)
+    https://github.com/Slimefun/Slimefun4
+
+Changes in this version: translated into English and modified by Sandun Prasanna
+(@SaanPrasanna) since November 2025. Every change is listed in CHANGELOG.md and in
+the git history of the repository above.
+
+Copyright (C) 2013-2026 TheBusyBiscuit and the Slimefun contributors
+Copyright (C) SlimefunGuguProject and its contributors (Chinese fork)
+Copyright (C) 2025-2026 Sandun Prasanna (English translation and modifications)
+
+Credits:
+  - Slimefun: created by TheBusyBiscuit in 2013, maintained by the Slimefun team
+    (including WalshyDev and LinoxGH) and hundreds of contributors:
+    https://github.com/Slimefun/Slimefun4/graphs/contributors
+  - SlimefunGuguProject: maintained by StarWishsama, with Xzavier0722, ybw0014 and
+    all contributors: https://github.com/SlimefunGuguProject/Slimefun4/graphs/contributors
+  - Translations into other languages: the translators listed in
+    src/main/resources/languages/translators.json
+
+License:
+  This program is free software: you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later version.
+  The full license text is in the LICENSE file (META-INF/LICENSE-Slimefun.txt inside
+  the plugin jar). The source code of every release is available from its tag at
+  https://github.com/SaanPrasanna/Slimefun4/releases
+
+  This program is distributed WITHOUT ANY WARRANTY; without even the implied warranty
+  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+  License for more details.
+
+Bundled third-party libraries keep their own licenses: dough (MIT), Unirest for Java
+(MIT), HikariCP (Apache-2.0), PostgreSQL JDBC Driver (BSD-2-Clause), Apache Commons
+Lang (Apache-2.0), GuizhanLib (GPL-3.0) and SlimefunCompLib.
+
+Minecraft is a trademark of Mojang Studios / Microsoft. This project is not affiliated
+with or endorsed by Mojang Studios or Microsoft.
