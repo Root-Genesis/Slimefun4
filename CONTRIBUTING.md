@@ -4,7 +4,7 @@ Before contributing code to the Slimefun (English Fork), please read these guide
 
 # Environment Setup
 
-We provide an automated code style check system. Please run `mvn install` to initialize the environment.
+We provide an automated code style check system. Please run `./gradlew spotlessApply` to initialize the environment.
 
 The project includes an `.editorconfig` file to control code style. If you have your own code style, please switch to the project's style before contributing.
 
@@ -38,7 +38,7 @@ Additionally, use the `trans` type for translation-related commits.
 
 Please do not over-condense code. Slimefun won't run faster just because you used fewer spaces.
 
-We use **Spotless** as our formatting tool. Before submitting, you **must** run `mvn spotless:check spotless:apply` to auto-format your code; otherwise, the CI will block your PR.
+We use **Spotless** as our formatting tool. Before submitting, you **must** run `./gradlew spotlessCheck spotlessApply` to auto-format your code; otherwise, the CI will block your PR.
 
 # Contribution Types
 
